@@ -5,16 +5,17 @@ const AddTransactions = () => {
   const [text, setText] = useState('');
   const [amount, setAmount] = useState(0);
   const { addTransaction } = useContext(GlobalContext);
+
   const handleSubmit = (e) => {
-    e.preventDefualt();
+    e.preventDefault();
     const newTransaction = {
       id: Math.floor(Math.random() * 100000000),
-      name: text,
+      text,
       amount: +amount,
     };
     addTransaction(newTransaction);
-    // setText('');
-    // setAmount(0);
+    setText('');
+    setAmount(0);
   };
   return (
     <>
@@ -38,7 +39,7 @@ const AddTransactions = () => {
             (negative - expense, positive - income)
           </label>
           <input
-            type="text"
+            type="number"
             placeholder="Enter Amount"
             value={amount}
             onChange={(e) => {
