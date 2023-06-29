@@ -8,16 +8,18 @@ import AddTransactions from './component/transactions/AddTransactions';
 import { GlobalProvider } from './store/GlobalState';
 GlobalProvider;
 function App() {
-  // const [expenses, setExpenses] = useState(ALL_EXPENSES);
-
   return (
     <GlobalProvider>
-      <Header />
-      <div className="container">
-        <Balance />
-        <IncomeExpenses />
-        <TransacionsList />
-        <AddTransactions />
+      <div className="main-container">
+        <main>
+          <Header />
+          <div className="container">
+            <Balance />
+            <IncomeExpenses />
+            <TransacionsList />
+            <AddTransactions />
+          </div>
+        </main>
       </div>
     </GlobalProvider>
   );
