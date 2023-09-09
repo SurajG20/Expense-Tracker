@@ -1,19 +1,16 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import styled from "styled-components";
 import bg from "./img/bg.png";
 import { MainLayout } from "./styles/Layouts";
-import Orb from "./Components/Orb/Orb";
-import Navigation from "./Components/Navigation/Navigation";
-import Dashboard from "./Components/Dashboard/Dashboard";
-import Incomes from "./Components/Incomes/Incomes";
-import Expenses from "./Components/Expenses/Expenses";
-// import { useGlobalContext } from "./context/globalContext";
+import Orb from "./components/Orb/Orb";
+import Navigation from "./components/Navigation/Navigation";
+import Dashboard from "./components/Dashboard/Dashboard";
+import Incomes from "./components/Income/Income";
+import Expenses from "./components/Expenses/Expenses";
 
 function App() {
   const [active, setActive] = useState(1);
 
-  // const global = useGlobalContext();
-  // console.log(global);
 
   const displayData = () => {
     switch (active) {
