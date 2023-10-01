@@ -8,12 +8,12 @@ import {
   Tooltip,
   Legend,
   ArcElement,
-} from "chart.js";
+} from 'chart.js';
 
-import { Line } from "react-chartjs-2";
-import styled from "styled-components";
-import { useGlobalContext } from "../../context/globalContext";
-import { dateFormat } from "../../utils/dateFormat";
+import { Line } from 'react-chartjs-2';
+import styled from 'styled-components';
+import { useGlobalContext } from '../../context/globalContext';
+import { dateFormat } from '../../utils/dateFormat';
 
 ChartJs.register(
   CategoryScale,
@@ -36,34 +36,39 @@ function Chart() {
     }),
     datasets: [
       {
-        label: "Income",
+        label: 'Income',
         data: [
           ...incomes.map((income) => {
             const { amount } = income;
             return amount;
           }),
         ],
-        backgroundColor: "green",
+        backgroundColor: 'green',
         tension: 0.2,
       },
       {
-        label: "Expenses",
+        label: 'Expenses',
         data: [
           ...expenses.map((expense) => {
             const { amount } = expense;
             return amount;
           }),
         ],
-        backgroundColor: "red",
+        backgroundColor: 'red',
         tension: 0.2,
       },
     ],
   };
 
   return (
-    <ChartStyled>
-      <Line data={data} />
-    </ChartStyled>
+    <>
+      <h1 style={{ fontSize: 'large', marginBottom: '1rem' }}>
+        All Transactions
+      </h1>
+      <ChartStyled>
+        <Line data={data} />
+      </ChartStyled>
+    </>
   );
 }
 

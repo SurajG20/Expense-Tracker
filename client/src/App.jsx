@@ -1,11 +1,10 @@
-import { useState } from "react";
-import styled from "styled-components";
-import bg from "./assets/bg.png";
-import { MainLayout } from "./styles/Layouts";
-import Navigation from "./components/Navigation/Navigation";
-import Dashboard from "./components/Dashboard/Dashboard";
-import Incomes from "./components/Income/Income";
-import Expenses from "./components/Expenses/Expenses";
+import { useState } from 'react';
+import styled from 'styled-components';
+import { MainLayout } from './styles/Layouts';
+import Navigation from './components/Navigation/Navigation';
+import Dashboard from './components/Dashboard/Dashboard';
+import Incomes from './components/Income/Income';
+import Expenses from './components/Expenses/Expenses';
 
 function App() {
   const [active, setActive] = useState(1);
@@ -24,7 +23,7 @@ function App() {
   };
 
   return (
-    <AppStyled bg={bg} className="App">
+    <AppStyled className='App'>
       <MainLayout>
         <Navigation active={active} setActive={setActive} />
         <main>{displayData()}</main>
@@ -35,10 +34,10 @@ function App() {
 
 const AppStyled = styled.div`
   height: 100vh;
-  background-image: url(${(props) => props.bg});
+  background: linear-gradient(to right, #26a0da, #314755);
   position: relative;
   main {
-    height: fit-content;
+    height: 100%;
     flex: 1;
     background: rgba(252, 246, 249, 0.78);
     border: 3px solid #ffffff;

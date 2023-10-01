@@ -1,26 +1,26 @@
 /* eslint-disable react/prop-types */
-import styled from "styled-components";
-import avatar from "../../assets/avatar.png";
-import { signout } from "../../utils/Icons";
-import { menuItems } from "../../utils/menuItems";
+import styled from 'styled-components';
+import avatar from '../../assets/avatar.png';
+import { signout } from '../../utils/Icons';
+import { menuItems } from '../../utils/menuItems';
 
 function Navigation({ active, setActive }) {
   return (
     <NavStyled>
-      <div className="user-con">
-        <img src={avatar} alt="" />
-        <div className="text">
-          <h2>Mike</h2>
+      <div className='user-con'>
+        <img src={avatar} alt='' />
+        <div className='text'>
+          <h2>Suraj</h2>
           <p>Your Money</p>
         </div>
       </div>
-      <ul className="menu-items">
+      <ul className='menu-items'>
         {menuItems.map((item) => {
           return (
             <li
               key={item.id}
               onClick={() => setActive(item.id)}
-              className={active === item.id ? "active" : ""}
+              className={active === item.id ? 'active' : ''}
             >
               {item.icon}
               <span>{item.title}</span>
@@ -28,7 +28,7 @@ function Navigation({ active, setActive }) {
           );
         })}
       </ul>
-      <div className="bottom-nav">
+      <div className='bottom-nav'>
         <li>{signout} Sign Out</li>
       </div>
     </NavStyled>
@@ -37,7 +37,7 @@ function Navigation({ active, setActive }) {
 
 const NavStyled = styled.nav`
   padding: 2rem 1.5rem;
-  width: 374px;
+  width: 280px;
   height: 100%;
   background: rgba(252, 246, 249, 0.78);
   border: 3px solid #ffffff;
@@ -53,8 +53,8 @@ const NavStyled = styled.nav`
     align-items: center;
     gap: 1rem;
     img {
-      width: 80px;
-      height: 80px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       object-fit: cover;
       background: #fcf6f9;
@@ -63,9 +63,11 @@ const NavStyled = styled.nav`
       box-shadow: 0px 1px 17px rgba(0, 0, 0, 0.06);
     }
     h2 {
+      font-size: medium;
       color: rgba(34, 34, 96, 1);
     }
     p {
+      font-size: medium;
       color: rgba(34, 34, 96, 0.6);
     }
   }
@@ -79,27 +81,32 @@ const NavStyled = styled.nav`
       grid-template-columns: 40px auto;
       align-items: center;
       margin: 0.6rem 0;
-      font-weight: 500;
+      font-weight: 400;
       cursor: pointer;
       transition: all 0.4s ease-in-out;
       color: rgba(34, 34, 96, 0.6);
       padding-left: 1rem;
       position: relative;
+      span {
+        font-size: 1.1rem;
+      }
       i {
         color: rgba(34, 34, 96, 0.6);
-        font-size: 1.4rem;
+        font-size: 1.1rem;
         transition: all 0.4s ease-in-out;
       }
     }
   }
-
+  .bottom-nav {
+    font-size: medium;
+  }
   .active {
     color: rgba(34, 34, 96, 1) !important;
     i {
       color: rgba(34, 34, 96, 1) !important;
     }
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       left: 0;
       top: 0;

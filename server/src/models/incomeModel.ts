@@ -1,0 +1,62 @@
+import mongoose, { Document, Model } from 'mongoose';
+
+interface IncomeAttributes {
+  title: string;
+  amount: number;
+  type?: string;
+  date: Date;
+  category: string;
+  description: string;
+}
+
+interface IncomeDocument extends Document, IncomeAttributes {
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface IncomeModel extends Model<IncomeDocument> {}
+
+const IncomeSchema = new mongoose.Schema<IncomeDocument, IncomeModel>(
+  {
+    title: {
+      type: String,
+      maxLength: 50,
+      trim: true,
+      required: true,
+    },
+    amount: {
+      type: Number,
+      maxLength: 20,
+      trim: true,
+      required: true,
+    },
+    type: {
+      type: String,
+      default: 'income',
+    },
+    date: {
+      type: Date,
+      required: true,
+      trim: true,
+    },
+    category: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    description: {
+      type: String,
+      required: true,
+      trim: true,
+      maxLength: 20,
+    },
+  },
+  { timestamps: true }
+);
+
+const IncomeModel = mongoose.model<IncomeDocument, IncomeModel>(
+  'Income',
+  IncomeSchema
+);
+
+export { IncomeDocument, IncomeModel };
