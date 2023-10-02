@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
-import axios from "axios";
+import React, { useContext, useState } from 'react';
+import axios from 'axios';
 
-const BASE_URL = "http://localhost:5000/api/v1/";
+const BASE_URL = 'http://localhost:5000/api/v1/';
 
 const GlobalContext = React.createContext();
 
+// eslint-disable-next-line react/prop-types
 export const GlobalProvider = ({ children }) => {
   const [incomes, setIncomes] = useState([]);
   const [expenses, setExpenses] = useState([]);
@@ -53,7 +54,6 @@ export const GlobalProvider = ({ children }) => {
   const getExpenses = async () => {
     const response = await axios.get(`${BASE_URL}get-expenses`);
     setExpenses(response.data.expenses);
-    console.log(response.data);
   };
 
   const deleteExpense = async (id) => {
@@ -108,6 +108,7 @@ export const GlobalProvider = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useGlobalContext = () => {
   return useContext(GlobalContext);
 };

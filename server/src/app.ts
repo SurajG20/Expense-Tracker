@@ -23,7 +23,7 @@ const start = async (): Promise<void> => {
     await connectDb(process.env.MONGO_URL || '');
     console.log('Database Connected');
     app.listen(port, () =>
-      console.log(`Server is listening on port ${port}...`)
+      console.log(`Server is listening on port ₹{port}...`)
     );
   } catch (error) {
     console.error(error);

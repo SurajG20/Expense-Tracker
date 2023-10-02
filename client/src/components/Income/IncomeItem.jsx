@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import styled from "styled-components";
-import { dateFormat } from "../../utils/dateFormat";
+import styled from 'styled-components';
+import { dateFormat } from '../../utils/dateFormat';
 import {
   bitcoin,
   book,
@@ -21,8 +21,8 @@ import {
   tv,
   users,
   yt,
-} from "../../utils/Icons";
-import Button from "../Button/Button";
+} from '../../utils/Icons';
+import Button from '../Button/Button';
 
 function IncomeItem({
   id,
@@ -37,61 +37,59 @@ function IncomeItem({
 }) {
   const categoryIcon = () => {
     switch (category) {
-      case "salary":
+      case 'salary':
         return money;
-      case "freelancing":
+      case 'freelancing':
         return freelance;
-      case "investments":
+      case 'investments':
         return stocks;
-      case "stocks":
+      case 'stocks':
         return users;
-      case "bitcoin":
+      case 'bitcoin':
         return bitcoin;
-      case "bank":
+      case 'bank':
         return card;
-      case "youtube":
+      case 'youtube':
         return yt;
-      case "other":
+      case 'other':
         return piggy;
       default:
-        return "";
+        return '';
     }
   };
 
   const expenseCatIcon = () => {
     switch (category) {
-      case "education":
+      case 'education':
         return book;
-      case "groceries":
+      case 'groceries':
         return food;
-      case "health":
+      case 'health':
         return medical;
-      case "subscriptions":
+      case 'subscriptions':
         return tv;
-      case "takeaways":
+      case 'takeaways':
         return takeaway;
-      case "clothing":
+      case 'clothing':
         return clothing;
-      case "travelling":
+      case 'travelling':
         return freelance;
-      case "other":
+      case 'other':
         return circle;
       default:
-        return "";
+        return '';
     }
   };
 
-  console.log("type", type);
-
   return (
     <IncomeItemStyled indicator={indicatorColor}>
-      <div className="icon">
-        {type === "expense" ? expenseCatIcon() : categoryIcon()}
+      <div className='icon'>
+        {type === 'expense' ? expenseCatIcon() : categoryIcon()}
       </div>
-      <div className="content">
+      <div className='content'>
         <h5>{title}</h5>
-        <div className="inner-content">
-          <div className="text">
+        <div className='inner-content'>
+          <div className='text'>
             <p>
               {dollar} {amount}
             </p>
@@ -103,15 +101,14 @@ function IncomeItem({
               {description}
             </p>
           </div>
-          <div className="btn-con">
+          <div className='btn-con'>
             <Button
               icon={trash}
-              bPad={"1rem"}
-              bRad={"50%"}
-              bg={"var(--primary-color"}
-              color={"#fff"}
-              iColor={"#fff"}
-              hColor={"var(--color-green)"}
+              bPad={'0.3rem'}
+              bRad={'50%'}
+              color={'var(--primary-color'}
+              iColor={'#fff'}
+              hColor={'var(--color-green)'}
               onClick={() => deleteItem(id)}
             />
           </div>
@@ -124,8 +121,7 @@ function IncomeItem({
 const IncomeItemStyled = styled.div`
   background: #fcf6f9;
   border: 2px solid #ffffff;
-  box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 1rem;
   margin-bottom: 1rem;
   display: flex;
@@ -134,8 +130,8 @@ const IncomeItemStyled = styled.div`
   width: 100%;
   color: #222260;
   .icon {
-    width: 80px;
-    height: 80px;
+    width: 40px;
+    height: 40px;
     border-radius: 20px;
     background: #f5f5f5;
     display: flex;
@@ -143,7 +139,7 @@ const IncomeItemStyled = styled.div`
     justify-content: center;
     border: 2px solid #ffffff;
     i {
-      font-size: 2.6rem;
+      font-size: 1.2rem;
     }
   }
 
@@ -153,11 +149,11 @@ const IncomeItemStyled = styled.div`
     flex-direction: column;
     gap: 0.2rem;
     h5 {
-      font-size: 1.3rem;
+      font-size: 1rem;
       padding-left: 2rem;
       position: relative;
       &::before {
-        content: "";
+        content: '';
         position: absolute;
         left: 0;
         top: 50%;
@@ -178,6 +174,7 @@ const IncomeItemStyled = styled.div`
         align-items: center;
         gap: 1.5rem;
         p {
+          font-size: medium;
           display: flex;
           align-items: center;
           gap: 0.5rem;
