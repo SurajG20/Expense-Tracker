@@ -1,52 +1,23 @@
-import { useState } from 'react';
+import Home from './components/Home/Home';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import Login from './components/Login/Login';
+import Register from './components/Register/Register';
 import styled from 'styled-components';
-import { MainLayout } from './styles/Layouts';
-import Navigation from './components/Navigation/Navigation';
-import Dashboard from './components/Dashboard/Dashboard';
-import Incomes from './components/Income/Income';
-import Expenses from './components/Expenses/Expenses';
-
-function App() {
-  const [active, setActive] = useState(1);
-
-  const displayData = () => {
-    switch (active) {
-      case 1:
-        return <Dashboard />;
-      case 2:
-        return <Incomes />;
-      case 3:
-        return <Expenses />;
-      default:
-        return <Dashboard />;
-    }
-  };
-
+const App = () => {
+  const user = true;
   return (
-    <AppStyled className='App'>
-      <MainLayout>
-        <Navigation active={active} setActive={setActive} />
-        <main>{displayData()}</main>
-      </MainLayout>
+    <AppStyled>
+      <Routes>
+        <Route path='/' element={user ? <Home /> : <Navigate to='/login' />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+      </Routes>
     </AppStyled>
   );
-}
-
+};
 const AppStyled = styled.div`
   height: 100vh;
-  background: linear-gradient(to right, #26a0da, #314755);
+  background: linear-gradient(to right, #3dabf2, #314755);
   position: relative;
-  main {
-    height: 100%;
-    flex: 1;
-    background: rgba(252, 246, 249, 0.78);
-    backdrop-filter: blur(4.5px);
-    border-radius: 5px;
-    overflow-x: hidden;
-    &::-webkit-scrollbar {
-      width: 0;
-    }
-  }
 `;
-
 export default App;

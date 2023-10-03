@@ -1,14 +1,21 @@
 import { Request, Response } from 'express';
 import { ExpenseDocument, ExpenseModel } from '../models/expenseModel';
+// declare module 'express-serve-static-core' {
+//   export interface Request {
+//     user: any;
+//   }
+// }
 
 export const addExpense = async (req: Request, res: Response) => {
   const { title, amount, date, category, description } = req.body;
+  const userId = req.user.user._id;
   const expense: ExpenseDocument = new ExpenseModel({
     title,
     amount,
     date,
     category,
     description,
+    user: userId,
   });
   try {
     // Validations
@@ -27,12 +34,13 @@ export const addExpense = async (req: Request, res: Response) => {
   }
 };
 
-export const getExpense = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const getExpense = async (req: Request, res: Response) => {
+  const userId = req.user.user._id;
+  console.log(userId);
   try {
-    const expenses: ExpenseDocument[] = await ExpenseModel.find().sort({
+    const expenses: ExpenseDocument[] = await ExpenseModel.find({
+      user: userId,
+    }).sort({
       createdAt: -1,
     });
     res.status(200).json({ expenses });
@@ -46,9 +54,11 @@ export const deleteExpense = async (
   res: Response
 ): Promise<void> => {
   const { id } = req.params;
+  const userId = req.user.user._id;
+
   try {
     const expense: ExpenseDocument | null =
-      await ExpenseModel.findByIdAndDelete(id);
+      await ExpenseModel.findByIdAndDelete({ _id: id, user: userId });
     if (expense) {
       res.status(200).json({ message: 'Expense Deleted' });
     } else {

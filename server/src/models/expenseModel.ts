@@ -1,4 +1,4 @@
-import mongoose, { Document, Model } from 'mongoose';
+import mongoose, { Document, Model, Schema } from 'mongoose';
 
 interface ExpenseAttributes {
   title: string;
@@ -7,6 +7,7 @@ interface ExpenseAttributes {
   date: Date;
   category: string;
   description: string;
+  user: Schema.Types.ObjectId;
 }
 
 interface ExpenseDocument extends Document, ExpenseAttributes {
@@ -49,6 +50,10 @@ const ExpenseSchema = new mongoose.Schema<ExpenseDocument, ExpenseModel>(
       required: true,
       trim: true,
       maxLength: 20,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
     },
   },
   { timestamps: true }

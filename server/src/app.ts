@@ -5,7 +5,8 @@ import morgan from 'morgan';
 import connectDb from './db/connect';
 
 // router
-import router from './routes/transaction';
+import router from './routes/transaction.routes';
+import authRoutes from './routes/auth.routes';
 const app: Application = express();
 config();
 
@@ -16,6 +17,7 @@ app.use(cors());
 
 // routes
 app.use('/api/v1', router);
+app.use('/api/v1', authRoutes);
 const port: number = parseInt(process.env.PORT || '3000');
 
 const start = async (): Promise<void> => {
@@ -23,7 +25,7 @@ const start = async (): Promise<void> => {
     await connectDb(process.env.MONGO_URL || '');
     console.log('Database Connected');
     app.listen(port, () =>
-      console.log(`Server is listening on port ₹{port}...`)
+      console.log(`Server is listening on port ${port}...`)
     );
   } catch (error) {
     console.error(error);

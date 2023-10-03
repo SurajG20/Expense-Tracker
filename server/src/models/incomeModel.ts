@@ -1,4 +1,4 @@
-import mongoose, { Document, Model } from 'mongoose';
+import mongoose, { Document, Model, Schema } from 'mongoose';
 
 interface IncomeAttributes {
   title: string;
@@ -7,6 +7,7 @@ interface IncomeAttributes {
   date: Date;
   category: string;
   description: string;
+  user: Schema.Types.ObjectId; // Add user field to store the user's ID
 }
 
 interface IncomeDocument extends Document, IncomeAttributes {
@@ -49,6 +50,10 @@ const IncomeSchema = new mongoose.Schema<IncomeDocument, IncomeModel>(
       required: true,
       trim: true,
       maxLength: 20,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User', // Reference to the User model
     },
   },
   { timestamps: true }

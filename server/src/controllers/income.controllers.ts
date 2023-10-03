@@ -3,12 +3,14 @@ import { IncomeModel, IncomeDocument } from '../models/incomeModel';
 
 export const addIncome = async (req: Request, res: Response) => {
   const { title, amount, date, category, description } = req.body;
+  const userId = req.user.user._id;
   const income: IncomeDocument = new IncomeModel({
     title,
     amount,
     date,
     category,
     description,
+    user: userId,
   });
   try {
     // Validations
@@ -28,8 +30,11 @@ export const addIncome = async (req: Request, res: Response) => {
 };
 
 export const getIncome = async (req: Request, res: Response): Promise<void> => {
+  const userId = req.user.user._id;
   try {
-    const incomes: IncomeDocument[] = await IncomeModel.find().sort({
+    const incomes: IncomeDocument[] = await IncomeModel.find({
+      user: userId,
+    }).sort({
       createdAt: -1,
     });
     res.status(200).json({ incomes });
@@ -43,10 +48,12 @@ export const deleteIncome = async (
   res: Response
 ): Promise<void> => {
   const { id } = req.params;
+  const userId = req.user.user._id;
   try {
-    const income: IncomeDocument | null = await IncomeModel.findByIdAndDelete(
-      id
-    );
+    const income: IncomeDocument | null = await IncomeModel.findByIdAndDelete({
+      _id: id,
+      user: userId,
+    });
     if (income) {
       res.status(200).json({ message: 'Income Deleted' });
     } else {
