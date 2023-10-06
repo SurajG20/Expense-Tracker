@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Button/Button';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, redirect } from 'react-router-dom';
+import { useGlobalContext } from '../../context/globalContext';
 function Login() {
+  const { login } = useGlobalContext();
   const [inputState, setInputState] = useState({
     username: '',
     password: '',
-    email: '',
   });
 
-  const { username, password, email } = inputState;
+  const { username, password } = inputState;
 
   const handleInput = (name) => (e) => {
     setInputState({ ...inputState, [name]: e.target.value });
@@ -17,10 +18,10 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    login(inputState);
     setInputState({
-      username,
-      password,
-      email,
+      username: '',
+      password: '',
     });
   };
 

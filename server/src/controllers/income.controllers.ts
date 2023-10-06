@@ -3,8 +3,8 @@ import { IncomeModel, IncomeDocument } from '../models/incomeModel';
 
 export const addIncome = async (req: Request, res: Response) => {
   const { title, amount, date, category, description } = req.body;
-  const userId = req.user.user._id;
-  const income: IncomeDocument = new IncomeModel({
+  const userId = req.user.userId;
+  const income = new IncomeModel({
     title,
     amount,
     date,
@@ -30,9 +30,9 @@ export const addIncome = async (req: Request, res: Response) => {
 };
 
 export const getIncome = async (req: Request, res: Response): Promise<void> => {
-  const userId = req.user.user._id;
+  const userId = req.user.userId;
   try {
-    const incomes: IncomeDocument[] = await IncomeModel.find({
+    const incomes = await IncomeModel.find({
       user: userId,
     }).sort({
       createdAt: -1,
@@ -48,9 +48,9 @@ export const deleteIncome = async (
   res: Response
 ): Promise<void> => {
   const { id } = req.params;
-  const userId = req.user.user._id;
+  const userId = req.user.userId;
   try {
-    const income: IncomeDocument | null = await IncomeModel.findByIdAndDelete({
+    const income = await IncomeModel.findByIdAndDelete({
       _id: id,
       user: userId,
     });

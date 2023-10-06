@@ -1,14 +1,9 @@
 import { Request, Response } from 'express';
 import { ExpenseDocument, ExpenseModel } from '../models/expenseModel';
-// declare module 'express-serve-static-core' {
-//   export interface Request {
-//     user: any;
-//   }
-// }
 
 export const addExpense = async (req: Request, res: Response) => {
   const { title, amount, date, category, description } = req.body;
-  const userId = req.user.user._id;
+  const userId = req.user.userId;
   const expense: ExpenseDocument = new ExpenseModel({
     title,
     amount,
@@ -35,8 +30,7 @@ export const addExpense = async (req: Request, res: Response) => {
 };
 
 export const getExpense = async (req: Request, res: Response) => {
-  const userId = req.user.user._id;
-  console.log(userId);
+  const userId = req.user.userId;
   try {
     const expenses: ExpenseDocument[] = await ExpenseModel.find({
       user: userId,
@@ -54,7 +48,7 @@ export const deleteExpense = async (
   res: Response
 ): Promise<void> => {
   const { id } = req.params;
-  const userId = req.user.user._id;
+  const userId = req.user.userId;
 
   try {
     const expense: ExpenseDocument | null =

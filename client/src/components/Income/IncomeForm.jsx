@@ -36,7 +36,7 @@ function Form() {
   };
   setTimeout(() => {
     setError('');
-  }, 5000);
+  }, 3000);
   return (
     <FormStyled onSubmit={handleSubmit}>
       {error && <p className='error'>{error}</p>}

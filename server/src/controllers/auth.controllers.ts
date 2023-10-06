@@ -36,8 +36,10 @@ export const Login = async (req: Request, res: Response) => {
       return res.status(400).json({ message: 'Wrong credentials' });
     }
 
-    const token = jwt.sign({ user }, process.env.JWT_SECRET_KEY as Secret, {
-      expiresIn: '7d',
+    const userObject = { userId: user._id.toString() };
+
+    const token = jwt.sign(userObject, process.env.JWT_SECRET_KEY as Secret, {
+      expiresIn: '1d',
     });
     const { password, ...rest } = user._doc;
     res.status(200).json({
@@ -49,4 +51,8 @@ export const Login = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });
   }
+};
+
+export const Logout = async (req: Request, res: Response) => {
+  res.status(200).json({ message: 'User is logged out successfully.' });
 };

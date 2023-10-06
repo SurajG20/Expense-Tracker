@@ -7,7 +7,7 @@ interface ExpenseAttributes {
   date: Date;
   category: string;
   description: string;
-  user: Schema.Types.ObjectId;
+  user: string;
 }
 
 interface ExpenseDocument extends Document, ExpenseAttributes {
@@ -52,8 +52,7 @@ const ExpenseSchema = new mongoose.Schema<ExpenseDocument, ExpenseModel>(
       maxLength: 20,
     },
     user: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
+      type: String,
     },
   },
   { timestamps: true }

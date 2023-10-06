@@ -1,8 +1,11 @@
-import React, { useContext, useState } from 'react';
-import { axiosInstance } from './fetchClient';
+import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
+
+const BASE_URL = 'http://localhost:5000/api/v1/';
 
 const GlobalContext = React.createContext();
 
+// eslint-disable-next-line react/prop-types
 export const GlobalProvider = ({ children }) => {
   const [incomes, setIncomes] = useState([]);
   const [expenses, setExpenses] = useState([]);
@@ -11,26 +14,24 @@ export const GlobalProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
 
   const addIncome = async (income) => {
-    try {
-      await axiosInstance.post('add-income', income);
-      getIncomes();
-    } catch (err) {
-      setError(err.response.data.message);
-    }
+    const response = await axios
+      .post(`${BASE_URL}add-income`, income)
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
+    getIncomes();
   };
 
   const getIncomes = async () => {
-    try {
-      const response = await axiosInstance.get('get-incomes');
-      setIncomes(response.data.incomes);
-    } catch (err) {
-      setError(err.response.data.message);
-    }
+    const response = await axios.get(`${BASE_URL}get-incomes`);
+    setIncomes(response.data.incomes);
   };
+
   const deleteIncome = async (id) => {
-    const response = await axiosInstance.delete(`delete-income/${id}`);
+    const res = await axios.delete(`${BASE_URL}delete-income/${id}`);
     getIncomes();
   };
+
   const totalIncome = () => {
     let totalIncome = 0;
     incomes &&
@@ -40,27 +41,27 @@ export const GlobalProvider = ({ children }) => {
 
     return totalIncome;
   };
-  const addExpense = async (expense) => {
-    try {
-      await axiosInstance.post('add-expense', expense);
-      getExpenses();
-    } catch (err) {
-      setError(err.response.data.message);
-    }
+
+  //calculate incomes
+  const addExpense = async (income) => {
+    const response = await axios
+      .post(`${BASE_URL}add-expense`, income)
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
+    getExpenses();
   };
 
   const getExpenses = async () => {
-    try {
-      const response = await axiosInstance.get('get-expenses');
-      setExpenses(response.data.expenses);
-    } catch (err) {
-      setError(err.response.data.message);
-    }
+    const response = await axios.get(`${BASE_URL}get-expenses`);
+    setExpenses(response.data.expenses);
   };
+
   const deleteExpense = async (id) => {
-    const response = await axiosInstance.delete(`delete-expense/${id}`);
+    const res = await axios.delete(`${BASE_URL}delete-expense/${id}`);
     getExpenses();
   };
+
   const totalExpenses = () => {
     let totalIncome = 0;
     expenses &&
@@ -70,6 +71,7 @@ export const GlobalProvider = ({ children }) => {
 
     return totalIncome;
   };
+
   const totalBalance = () => {
     return totalIncome() - totalExpenses();
   };
@@ -83,33 +85,31 @@ export const GlobalProvider = ({ children }) => {
     return history.slice(0, 3);
   };
 
+  // User Authentication
+
   const register = async (data) => {
-    try {
-      const response = await axiosInstance.post('register', data);
-      console.log('response register :', response);
-    } catch (err) {
-      setError(err.response.data.message);
-    }
+    const response = await axios
+      .post(`${BASE_URL}register`, data)
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
+    console.log('response register :', response);
   };
   const login = async (data) => {
-    try {
-      const response = await axiosInstance.post('login', data);
-      setUser(true);
-      setUserData(response.data);
-      localStorage.setItem('token', response.data.token);
-    } catch (err) {
+    const response = await axios.post(`${BASE_URL}login`, data).catch((err) => {
       setError(err.response.data.message);
-    }
+    });
+    setUser(true);
+    setUserData(response.data);
+    const serializedObj = JSON.stringify(response.data.token);
+    localStorage.setItem('token', serializedObj);
   };
-
   const logout = async () => {
-    try {
-      await axiosInstance.post('logout');
-      setUser(false);
-      localStorage.removeItem('token');
-    } catch (err) {
-      setError(err.response.data.message);
-    }
+    const response = await axios
+      .post(`${BASE_URL}logout`)
+      .catch((err) => setError(err.response.data.message));
+    setUser(false);
+    localStorage.clear('token');
   };
 
   return (

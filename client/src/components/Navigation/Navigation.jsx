@@ -3,14 +3,20 @@ import styled from 'styled-components';
 import avatar from '../../assets/avatar.png';
 import { signout } from '../../utils/Icons';
 import { menuItems } from '../../utils/menuItems';
+import { useGlobalContext } from '../../context/globalContext';
+import Button from '../Button/Button';
 
 function Navigation({ active, setActive }) {
+  const { logout, userData } = useGlobalContext();
+  const handleInput = () => {
+    logout();
+  };
   return (
     <NavStyled>
       <div className='user-con'>
         <img src={avatar} alt='' />
         <div className='text'>
-          <h2>Suraj</h2>
+          <h2>{userData.username}</h2>
           <p>Your Money</p>
         </div>
       </div>
@@ -29,7 +35,15 @@ function Navigation({ active, setActive }) {
         })}
       </ul>
       <div className='bottom-nav'>
-        <li>{signout} Sign Out</li>
+        <Button
+          onClick={handleInput}
+          name={'SignOut'}
+          icon={signout}
+          bPad={'.3rem .6rem'}
+          bRad={'20px'}
+          bg={'var(--color-gray'}
+          color={'lightcoral'}
+        />
       </div>
     </NavStyled>
   );
@@ -63,6 +77,7 @@ const NavStyled = styled.nav`
     }
     h2 {
       font-size: medium;
+      text-transform: capitalize;
       color: rgba(34, 34, 96, 1);
     }
     p {

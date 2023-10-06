@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useGlobalContext } from '../../context/globalContext';
 import History from './History';
 import { InnerLayout } from '../../styles/Layouts';
-import { dollar } from '../../utils/Icons';
 import Chart from './Chart';
 
 function Dashboard() {
@@ -15,12 +14,13 @@ function Dashboard() {
     totalBalance,
     getIncomes,
     getExpenses,
+    user,
   } = useGlobalContext();
 
   useEffect(() => {
     getIncomes();
     getExpenses();
-  }, []);
+  }, [user]);
 
   return (
     <DashboardStyled>
