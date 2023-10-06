@@ -5,6 +5,9 @@ export const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
+    // Authorization: `Bearer ${localStorage.getItem('token') || ''}`,
   },
 });
+export const setAuthorizationHeader = (token) => {
+  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+};

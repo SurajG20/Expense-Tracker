@@ -14,13 +14,12 @@ function Dashboard() {
     totalBalance,
     getIncomes,
     getExpenses,
-    user,
   } = useGlobalContext();
 
   useEffect(() => {
     getIncomes();
     getExpenses();
-  }, [user]);
+  }, []);
 
   return (
     <DashboardStyled>

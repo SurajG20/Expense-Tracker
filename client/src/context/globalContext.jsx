@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { axiosInstance } from './fetchClient';
-
+import { axiosInstance, setAuthorizationHeader } from './fetchClient';
 const GlobalContext = React.createContext();
 
 export const GlobalProvider = ({ children }) => {
@@ -28,7 +27,7 @@ export const GlobalProvider = ({ children }) => {
     }
   };
   const deleteIncome = async (id) => {
-    const response = await axiosInstance.delete(`delete-income/${id}`);
+    await axiosInstance.delete(`delete-income/${id}`);
     getIncomes();
   };
   const totalIncome = () => {
@@ -58,7 +57,7 @@ export const GlobalProvider = ({ children }) => {
     }
   };
   const deleteExpense = async (id) => {
-    const response = await axiosInstance.delete(`delete-expense/${id}`);
+    await axiosInstance.delete(`delete-expense/${id}`);
     getExpenses();
   };
   const totalExpenses = () => {
@@ -85,8 +84,7 @@ export const GlobalProvider = ({ children }) => {
 
   const register = async (data) => {
     try {
-      const response = await axiosInstance.post('register', data);
-      console.log('response register :', response);
+      await axiosInstance.post('register', data);
     } catch (err) {
       setError(err.response.data.message);
     }
@@ -94,9 +92,10 @@ export const GlobalProvider = ({ children }) => {
   const login = async (data) => {
     try {
       const response = await axiosInstance.post('login', data);
+      localStorage.setItem('token', response.data.token);
+      setAuthorizationHeader(response.data.token);
       setUser(true);
       setUserData(response.data);
-      localStorage.setItem('token', response.data.token);
     } catch (err) {
       setError(err.response.data.message);
     }
@@ -105,8 +104,12 @@ export const GlobalProvider = ({ children }) => {
   const logout = async () => {
     try {
       await axiosInstance.post('logout');
-      setUser(false);
+      setAuthorizationHeader('');
       localStorage.removeItem('token');
+      setUser(false);
+      setUserData({});
+      setIncomes([]);
+      setExpenses([]);
     } catch (err) {
       setError(err.response.data.message);
     }
@@ -118,6 +121,8 @@ export const GlobalProvider = ({ children }) => {
         addIncome,
         getIncomes,
         incomes,
+        setIncomes,
+        setExpenses,
         deleteIncome,
         expenses,
         totalIncome,

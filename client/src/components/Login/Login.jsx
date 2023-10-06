@@ -1,28 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Button/Button';
-import { Link, Navigate, redirect } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../../context/globalContext';
 function Login() {
-  const { login } = useGlobalContext();
+  const { login, user } = useGlobalContext();
   const [inputState, setInputState] = useState({
     username: '',
     password: '',
   });
 
   const { username, password } = inputState;
-
+  const navigate = useNavigate();
   const handleInput = (name) => (e) => {
     setInputState({ ...inputState, [name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(inputState);
-    setInputState({
-      username: '',
-      password: '',
-    });
+    try {
+      await login(inputState);
+      setInputState({
+        username: '',
+        password: '',
+      });
+      navigate('/');
+    } catch (error) {
+      console.error('Registration error:', error);
+    }
   };
 
   return (

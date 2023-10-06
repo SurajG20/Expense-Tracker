@@ -7,7 +7,7 @@ import Incomes from '../Income/Income';
 import Expenses from '../Expenses/Expenses';
 function Home() {
   const [active, setActive] = useState(1);
-
+  console.log('homepage is rerendered');
   const displayData = () => {
     switch (active) {
       case 1:

@@ -1,23 +1,6 @@
-import mongoose, { Document, Model, Schema } from 'mongoose';
+import { InferSchemaType, model, Schema } from 'mongoose';
 
-interface ExpenseAttributes {
-  title: string;
-  amount: number;
-  type?: string;
-  date: Date;
-  category: string;
-  description: string;
-  user: string;
-}
-
-interface ExpenseDocument extends Document, ExpenseAttributes {
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface ExpenseModel extends Model<ExpenseDocument> {}
-
-const ExpenseSchema = new mongoose.Schema<ExpenseDocument, ExpenseModel>(
+const ExpenseSchema = new Schema(
   {
     title: {
       type: String,
@@ -57,10 +40,6 @@ const ExpenseSchema = new mongoose.Schema<ExpenseDocument, ExpenseModel>(
   },
   { timestamps: true }
 );
+type Expense = InferSchemaType<typeof ExpenseSchema>;
 
-const ExpenseModel = mongoose.model<ExpenseDocument, ExpenseModel>(
-  'expense',
-  ExpenseSchema
-);
-
-export { ExpenseDocument, ExpenseModel };
+export default model<Expense>('Expense', ExpenseSchema);

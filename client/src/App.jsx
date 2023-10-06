@@ -4,20 +4,21 @@ import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import styled from 'styled-components';
 import { useGlobalContext } from './context/globalContext';
+import { setAuthorizationHeader } from './context/fetchClient';
+import { useEffect } from 'react';
 const App = () => {
   const { user } = useGlobalContext();
-  console.log(user);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setAuthorizationHeader(token);
+    }
+  }, []);
   return (
     <AppStyled>
       <Routes>
-        <Route
-          path='/'
-          element={!user ? <Navigate to='/login' replace /> : <Home />}
-        />
-        <Route
-          path='/login'
-          element={user ? <Navigate to='/' replace /> : <Login />}
-        />
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
       </Routes>
     </AppStyled>

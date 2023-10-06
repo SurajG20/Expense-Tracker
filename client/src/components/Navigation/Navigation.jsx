@@ -5,11 +5,14 @@ import { signout } from '../../utils/Icons';
 import { menuItems } from '../../utils/menuItems';
 import { useGlobalContext } from '../../context/globalContext';
 import Button from '../Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 function Navigation({ active, setActive }) {
   const { logout, userData } = useGlobalContext();
+  const navigate = useNavigate();
   const handleInput = () => {
     logout();
+    navigate('/login');
   };
   return (
     <NavStyled>
