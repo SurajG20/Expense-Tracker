@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { useGlobalContext } from '../../context/globalContext';
 import { InnerLayout } from '../../styles/Layouts';
 import Form from './IncomeForm';
 import IncomeItem from './IncomeItem';
-
+import { useSelector } from 'react-redux';
+import { getIncomes, deleteIncome } from '../../features/incomes/incomeActions';
+import { calculateTotalIncome } from '../../features/utilities/totalUtilities';
+import { useDispatch } from 'react-redux';
 function Income() {
-  const { incomes, getIncomes, deleteIncome, totalIncome } = useGlobalContext();
-
+  const dispatch = useDispatch();
+  const incomes = useSelector((state) => state.incomes);
   useEffect(() => {
-    getIncomes();
+    getIncomes(dispatch);
   }, []);
   return (
     <IncomeStyled>
@@ -25,7 +27,7 @@ function Income() {
           }}
         >
           <h2 className='total-income'>
-            Total Income: <span>₹{totalIncome()}</span>
+            Total Income: <span>₹{calculateTotalIncome(incomes)}</span>
           </h2>
         </div>
         <div className='income-content'>
@@ -47,7 +49,7 @@ function Income() {
                   type={type}
                   category={category}
                   indicatorColor='var(--color-green)'
-                  deleteItem={deleteIncome}
+                  deleteItem={dispatch(deleteIncome)}
                 />
               );
             })}

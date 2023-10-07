@@ -2,12 +2,13 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useGlobalContext } from '../../context/globalContext';
 import Button from '../Button/Button';
 import { plus } from '../../utils/Icons';
-
+import { addIncome } from '../../features/incomes/incomeActions';
+import { useDispatch } from 'react-redux';
 function Form() {
-  const { addIncome, error, setError } = useGlobalContext();
+  const dispatch = useDispatch();
+
   const [inputState, setInputState] = useState({
     title: '',
     amount: '',
@@ -20,12 +21,12 @@ function Form() {
 
   const handleInput = (name) => (e) => {
     setInputState({ ...inputState, [name]: e.target.value });
-    setError('');
+    // setError('');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addIncome(inputState);
+    addIncome(dispatch, inputState);
     setInputState({
       title: '',
       amount: '',
@@ -34,12 +35,10 @@ function Form() {
       description: '',
     });
   };
-  setTimeout(() => {
-    setError('');
-  }, 3000);
+
   return (
     <FormStyled onSubmit={handleSubmit}>
-      {error && <p className='error'>{error}</p>}
+      {/* {error && <p className='error'>{error}</p>} */}
       <div className='input-control'>
         <input
           type='text'

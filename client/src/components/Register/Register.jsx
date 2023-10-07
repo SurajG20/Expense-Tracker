@@ -2,9 +2,9 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Button/Button';
 import { Link, useNavigate } from 'react-router-dom';
-import { useGlobalContext } from '../../context/globalContext';
+import { register } from '../../features/users/userActions';
+import { useDispatch } from 'react-redux';
 function Register() {
-  const { register } = useGlobalContext();
   const [inputState, setInputState] = useState({
     username: '',
     password: '',
@@ -12,24 +12,21 @@ function Register() {
   });
   const navigate = useNavigate();
   const { username, password, email } = inputState;
+  const dispatch = useDispatch();
 
   const handleInput = (name) => (e) => {
     setInputState({ ...inputState, [name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      await register(inputState);
-      setInputState({
-        username: '',
-        password: '',
-        email: '',
-      });
-      navigate('/login');
-    } catch (error) {
-      console.error('Registration error:', error);
-    }
+    register(dispatch, inputState);
+    setInputState({
+      username: '',
+      password: '',
+      email: '',
+    });
+    navigate('/login');
   };
 
   return (

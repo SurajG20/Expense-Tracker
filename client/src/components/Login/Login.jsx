@@ -1,28 +1,29 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Button/Button';
-import { Link, Navigate, redirect } from 'react-router-dom';
-import { useGlobalContext } from '../../context/globalContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../../features/users/userActions';
 function Login() {
-  const { login } = useGlobalContext();
+  const dispatch = useDispatch();
   const [inputState, setInputState] = useState({
     username: '',
     password: '',
   });
-
   const { username, password } = inputState;
-
+  const navigate = useNavigate();
   const handleInput = (name) => (e) => {
     setInputState({ ...inputState, [name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(inputState);
+    login(dispatch, inputState);
     setInputState({
       username: '',
       password: '',
     });
+    navigate('/');
   };
 
   return (

@@ -9,12 +9,10 @@ import {
   Legend,
   ArcElement,
 } from 'chart.js';
-
 import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
-import { useGlobalContext } from '../../context/globalContext';
 import { dateFormat } from '../../utils/dateFormat';
-
+import { useSelector } from 'react-redux';
 ChartJs.register(
   CategoryScale,
   LinearScale,
@@ -27,7 +25,8 @@ ChartJs.register(
 );
 
 function Chart() {
-  const { incomes, expenses } = useGlobalContext();
+  const incomes = useSelector((state) => state.incomes.incomes);
+  const expenses = useSelector((state) => state.expenses.expenses);
 
   const data = {
     labels: incomes.map((inc) => {

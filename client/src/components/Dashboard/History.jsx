@@ -1,11 +1,12 @@
 import styled from 'styled-components';
-import { useGlobalContext } from '../../context/globalContext';
-
+import { getTransactionHistory } from '../../features/utilities/totalUtilities';
+import { useSelector } from 'react-redux';
 function History() {
-  const { transactionHistory } = useGlobalContext();
+  const incomes = useSelector((state) => state.incomes.incomes);
+  const expenses = useSelector((state) => state.expenses.expenses);
 
-  const [...history] = transactionHistory();
-
+  const [...history] = getTransactionHistory(incomes, expenses);
+  console.log('History page, ', history);
   return (
     <>
       <h2 style={{ fontSize: 'large', marginBottom: '1rem' }}>

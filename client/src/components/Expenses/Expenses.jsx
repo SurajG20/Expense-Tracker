@@ -1,16 +1,20 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { useGlobalContext } from '../../context/globalContext';
 import { InnerLayout } from '../../styles/Layouts';
 import IncomeItem from '../Income/IncomeItem';
 import ExpenseForm from './ExpenseForm';
-
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getExpense,
+  deleteExpense,
+} from '../../features/expenses/expenseActions';
+import { calculateTotalExpenses } from '../../features/utilities/totalUtilities';
 function Expenses() {
-  const { expenses, getExpenses, deleteExpense, totalExpenses } =
-    useGlobalContext();
+  const dispatch = useDispatch();
+  const expenses = useSelector((state) => state.expenses);
 
   useEffect(() => {
-    getExpenses();
+    getExpense(dispatch);
   }, []);
   return (
     <ExpenseStyled>
@@ -26,7 +30,7 @@ function Expenses() {
           }}
         >
           <h2 className='total-income'>
-            Total Expense: <span>₹{totalExpenses()}</span>
+            Total Expense: <span>₹{calculateTotalExpenses(expenses)}</span>
           </h2>
         </div>
 
@@ -49,7 +53,7 @@ function Expenses() {
                   type={type}
                   category={category}
                   indicatorColor='var(--color-green)'
-                  deleteItem={deleteExpense}
+                  deleteItem={dispatch(deleteExpense())}
                 />
               );
             })}

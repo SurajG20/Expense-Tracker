@@ -1,26 +1,25 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import { useGlobalContext } from '../../context/globalContext';
 import History from './History';
 import { InnerLayout } from '../../styles/Layouts';
 import Chart from './Chart';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { getIncomes } from '../../features/incomes/incomeActions';
+import { getExpense } from '../../features/expenses/expenseActions';
+import {
+  calculateTotalBalance,
+  calculateTotalIncome,
+  calculateTotalExpenses,
+} from '../../features/utilities/totalUtilities';
 function Dashboard() {
-  const {
-    totalExpenses,
-    incomes,
-    expenses,
-    totalIncome,
-    totalBalance,
-    getIncomes,
-    getExpenses,
-    user,
-  } = useGlobalContext();
+  const dispatch = useDispatch();
+  const incomes = useSelector((state) => state.incomes.incomes);
+  const expenses = useSelector((state) => state.expenses.expenses);
 
   useEffect(() => {
-    getIncomes();
-    getExpenses();
-  }, [user]);
+    getIncomes(dispatch);
+    getExpense(dispatch);
+  }, []);
 
   return (
     <DashboardStyled>
@@ -31,15 +30,15 @@ function Dashboard() {
             <div className='amount-con'>
               <div className='income'>
                 <h2>Total Income</h2>
-                <p>₹ {totalIncome()}</p>
+                <p>₹ {calculateTotalIncome(incomes)}</p>
               </div>
               <div className='expense'>
                 <h2>Total Expense</h2>
-                <p>₹ {totalExpenses()}</p>
+                <p>₹ {calculateTotalExpenses(expenses)}</p>
               </div>
               <div className='balance'>
                 <h2>Total Balance</h2>
-                <p>₹ {totalBalance()}</p>
+                <p>₹ {calculateTotalBalance(incomes, expenses)}</p>
               </div>
             </div>
           </div>

@@ -2,12 +2,12 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useGlobalContext } from '../../context/globalContext';
 import Button from '../Button/Button';
 import { plus } from '../../utils/Icons';
-
+import { addExpense } from '../../features/expenses/expenseActions';
+import { useDispatch } from 'react-redux';
 function ExpenseForm() {
-  const { addExpense, error, setError } = useGlobalContext();
+  const dispatch = useDispatch();
   const [inputState, setInputState] = useState({
     title: '',
     amount: '',
@@ -20,12 +20,12 @@ function ExpenseForm() {
 
   const handleInput = (name) => (e) => {
     setInputState({ ...inputState, [name]: e.target.value });
-    setError('');
+    // setError('');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addExpense(inputState);
+    addExpense(dispatch, inputState);
     setInputState({
       title: '',
       amount: '',
@@ -34,13 +34,13 @@ function ExpenseForm() {
       description: '',
     });
   };
-  setTimeout(() => {
-    setError('');
-  }, 5000);
+  // setTimeout(() => {
+  //   setError('');
+  // }, 5000);
 
   return (
     <ExpenseFormStyled onSubmit={handleSubmit}>
-      {error && <p className='error'>{error}</p>}
+      {/* {error && <p className='error'>{error}</p>} */}
       <div className='input-control'>
         <input
           type='text'

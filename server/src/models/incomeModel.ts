@@ -1,23 +1,6 @@
-import mongoose, { Document, Model, Schema } from 'mongoose';
+import { InferSchemaType, model, Schema } from 'mongoose';
 
-interface IncomeAttributes {
-  title: string;
-  amount: number;
-  type?: string;
-  date: Date;
-  category: string;
-  description: string;
-  user: string;
-}
-
-interface IncomeDocument extends Document, IncomeAttributes {
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface IncomeModel extends Model<IncomeDocument> {}
-
-const IncomeSchema = new mongoose.Schema<IncomeDocument, IncomeModel>(
+const IncomeSchema = new Schema(
   {
     title: {
       type: String,
@@ -58,9 +41,6 @@ const IncomeSchema = new mongoose.Schema<IncomeDocument, IncomeModel>(
   { timestamps: true }
 );
 
-const IncomeModel = mongoose.model<IncomeDocument, IncomeModel>(
-  'Income',
-  IncomeSchema
-);
+type Income = InferSchemaType<typeof IncomeSchema>;
 
-export { IncomeDocument, IncomeModel };
+export default model<Income>('Income', IncomeSchema);

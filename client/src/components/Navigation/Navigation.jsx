@@ -1,22 +1,26 @@
-/* eslint-disable react/prop-types */
 import styled from 'styled-components';
 import avatar from '../../assets/avatar.png';
 import { signout } from '../../utils/Icons';
 import { menuItems } from '../../utils/menuItems';
-import { useGlobalContext } from '../../context/globalContext';
 import Button from '../Button/Button';
-
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../features/users/userActions';
+import { useDispatch, useSelector } from 'react-redux';
 function Navigation({ active, setActive }) {
-  const { logout, userData } = useGlobalContext();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.users.currentUser);
+  console.log('user From Navigation console :: ', user);
   const handleInput = () => {
-    logout();
+    logout(dispatch, user);
+    navigate('/login');
   };
   return (
     <NavStyled>
       <div className='user-con'>
         <img src={avatar} alt='' />
         <div className='text'>
-          <h2>{userData.username}</h2>
+          <h2>{user.username}</h2>
           <p>Your Money</p>
         </div>
       </div>
