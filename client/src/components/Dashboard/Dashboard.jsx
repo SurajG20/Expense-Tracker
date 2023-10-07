@@ -12,6 +12,7 @@ import {
   calculateTotalExpenses,
 } from '../../features/utilities/totalUtilities';
 function Dashboard() {
+<<<<<<< HEAD
   const dispatch = useDispatch();
   const incomes = useSelector((state) => state.incomes.incomes);
   const expenses = useSelector((state) => state.expenses.expenses);
@@ -19,6 +20,21 @@ function Dashboard() {
   useEffect(() => {
     getIncomes(dispatch);
     getExpense(dispatch);
+=======
+  const {
+    totalExpenses,
+    incomes,
+    expenses,
+    totalIncome,
+    totalBalance,
+    getIncomes,
+    getExpenses,
+  } = useGlobalContext();
+
+  useEffect(() => {
+    getIncomes();
+    getExpenses();
+>>>>>>> fa290cc77b532f20b56a852ee36f30a7f2ae91b0
   }, []);
 
   return (

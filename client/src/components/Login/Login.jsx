@@ -1,11 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Button/Button';
 import { Link, useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { useDispatch } from 'react-redux';
 import { login } from '../../features/users/userActions';
 function Login() {
   const dispatch = useDispatch();
+=======
+import { useGlobalContext } from '../../context/globalContext';
+function Login() {
+  const { login, user } = useGlobalContext();
+>>>>>>> fa290cc77b532f20b56a852ee36f30a7f2ae91b0
   const [inputState, setInputState] = useState({
     username: '',
     password: '',
@@ -16,14 +22,27 @@ function Login() {
     setInputState({ ...inputState, [name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+<<<<<<< HEAD
     login(dispatch, inputState);
     setInputState({
       username: '',
       password: '',
     });
     navigate('/');
+=======
+    try {
+      await login(inputState);
+      setInputState({
+        username: '',
+        password: '',
+      });
+      navigate('/');
+    } catch (error) {
+      console.error('Registration error:', error);
+    }
+>>>>>>> fa290cc77b532f20b56a852ee36f30a7f2ae91b0
   };
 
   return (
