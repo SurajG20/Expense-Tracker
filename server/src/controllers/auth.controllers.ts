@@ -46,7 +46,6 @@ export const Login = async (req: Request, res: Response) => {
       ...rest,
       message: 'User is logged in successfully.',
       token,
-      userId: user._id.toString(),
     });
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });

@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { ExpenseDocument, ExpenseModel } from '../models/expenseModel';
+import ExpenseModel from '../models/expenseModel';
 
 export const addExpense = async (req: Request, res: Response) => {
   const { title, amount, date, category, description } = req.body;
   const userId = req.user.userId;
-  const expense: ExpenseDocument = new ExpenseModel({
+  const expense = new ExpenseModel({
     title,
     amount,
     date,
@@ -32,7 +32,7 @@ export const addExpense = async (req: Request, res: Response) => {
 export const getExpense = async (req: Request, res: Response) => {
   const userId = req.user.userId;
   try {
-    const expenses: ExpenseDocument[] = await ExpenseModel.find({
+    const expenses = await ExpenseModel.find({
       user: userId,
     }).sort({
       createdAt: -1,
@@ -51,8 +51,10 @@ export const deleteExpense = async (
   const userId = req.user.userId;
 
   try {
-    const expense: ExpenseDocument | null =
-      await ExpenseModel.findByIdAndDelete({ _id: id, user: userId });
+    const expense = await ExpenseModel.findByIdAndDelete({
+      _id: id,
+      user: userId,
+    });
     if (expense) {
       res.status(200).json({ message: 'Expense Deleted' });
     } else {

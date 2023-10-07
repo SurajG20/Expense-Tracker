@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
-import { IncomeModel, IncomeDocument } from '../models/incomeModel';
+import IncomeModel from '../models/incomeModel';
 
 export const addIncome = async (req: Request, res: Response) => {
   const { title, amount, date, category, description } = req.body;
   const userId = req.user.userId;
+  console.log('userId from income', userId);
   const income = new IncomeModel({
     title,
     amount,
