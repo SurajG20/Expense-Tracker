@@ -37,7 +37,7 @@ export const getExpense = async (req: Request, res: Response) => {
     }).sort({
       createdAt: -1,
     });
-    res.status(200).json({ expenses });
+    res.status(200).json(expenses);
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });
   }

@@ -16,7 +16,6 @@ export const getExpense = async (dispatch) => {
   try {
     const res = await userRequest.get('/get-expenses');
     dispatch(getExpensesSuccess(res.data));
-    console.log('getExpenes Redux console ==> ');
   } catch (error) {
     dispatch(getExpensesFailure());
   }

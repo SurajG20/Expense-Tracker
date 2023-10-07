@@ -20,7 +20,7 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    register(dispatch, inputState);
+    dispatch(register(inputState));
     setInputState({
       username: '',
       password: '',

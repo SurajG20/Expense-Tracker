@@ -22,7 +22,9 @@ import {
   yt,
 } from '../../utils/Icons';
 import Button from '../Button/Button';
-
+import { useDispatch } from 'react-redux';
+import { getIncomes } from '../../features/incomes/incomeActions';
+import { getExpenses } from '../../features/expenses/expenseActions';
 function IncomeItem({
   id,
   title,
@@ -34,6 +36,7 @@ function IncomeItem({
   indicatorColor,
   type,
 }) {
+  const dispatch = useDispatch();
   const categoryIcon = () => {
     switch (category) {
       case 'salary':
@@ -80,6 +83,11 @@ function IncomeItem({
     }
   };
 
+  const handleDelete = () => {
+    deleteItem(dispatch, id);
+    getIncomes(dispatch);
+    getExpenses(dispatch);
+  };
   return (
     <IncomeItemStyled indicator={indicatorColor}>
       <div className='icon'>
@@ -108,7 +116,7 @@ function IncomeItem({
               color={'var(--primary-color'}
               iColor={'#fff'}
               hColor={'var(--color-green)'}
-              onClick={() => deleteItem(id)}
+              onClick={handleDelete}
             />
           </div>
         </div>

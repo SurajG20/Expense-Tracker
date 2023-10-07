@@ -14,16 +14,16 @@ app.use(morgan('dev'));
 // middleware
 app.use(express.json());
 app.use(cors());
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header(
-//     'Access-Control-Allow-Headers',
-//     'Origin, X-Requested-With, Content-Type, Accept'
-//   );
-//   res.header('Access-Control-Allow-Credentials', true as any);
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH');
-//   next();
-// });
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  res.header('Access-Control-Allow-Credentials', true as any);
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH');
+  next();
+});
 app.use('/api/v1', router);
 app.use('/api/v1', authRoutes);
 const port: number = parseInt(process.env.PORT || '3000');

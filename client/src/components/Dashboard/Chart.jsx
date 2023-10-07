@@ -27,7 +27,6 @@ ChartJs.register(
 function Chart() {
   const incomes = useSelector((state) => state.incomes.incomes);
   const expenses = useSelector((state) => state.expenses.expenses);
-
   const data = {
     labels: incomes.map((inc) => {
       const { date } = inc;

@@ -6,6 +6,9 @@ import {
   registerFailure,
   registerStart,
   registerSuccess,
+  logoutFailure,
+  logoutStart,
+  logoutSuccess,
 } from './userSlice';
 
 export const login = (user) => {
@@ -32,12 +35,12 @@ export const register = (user) => {
 };
 export const logout = (user) => {
   return async (dispatch) => {
-    dispatch(registerStart());
+    dispatch(logoutStart());
     try {
       const res = await publicRequest.post('/logout', user);
-      dispatch(registerSuccess(res.data));
+      dispatch(logoutSuccess(res.data));
     } catch (error) {
-      dispatch(registerFailure());
+      dispatch(logoutFailure());
     }
   };
 };

@@ -16,7 +16,6 @@ export const getIncomes = async (dispatch) => {
   try {
     const res = await userRequest.get('/get-incomes');
     dispatch(getIncomesSuccess(res.data));
-    console.log('getIncomes Redux console ==> ');
   } catch (error) {
     dispatch(getIncomesFailure());
   }

@@ -1,10 +1,16 @@
 // Calculate total income
 export const calculateTotalIncome = (incomes) => {
+  if (!incomes || !Array.isArray(incomes)) {
+    return 0; // or handle the error appropriately
+  }
   return incomes.reduce((total, income) => total + income.amount, 0);
 };
 
 // Calculate total expenses
 export const calculateTotalExpenses = (expenses) => {
+  if (!expenses || !Array.isArray(expenses)) {
+    return 0; // or handle the error appropriately
+  }
   return expenses.reduce((total, expense) => total + expense.amount, 0);
 };
 

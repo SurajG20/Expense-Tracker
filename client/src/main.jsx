@@ -8,10 +8,9 @@ import { Store } from './app/Store';
 import { Provider } from 'react-redux';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <GlobalStyle />
     <Provider store={Store}>
-      <GlobalStyle />
       <Router>
-        <App />
         <App />
       </Router>
     </Provider>

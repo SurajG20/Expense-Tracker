@@ -6,7 +6,6 @@ function History() {
   const expenses = useSelector((state) => state.expenses.expenses);
 
   const [...history] = getTransactionHistory(incomes, expenses);
-  console.log('History page, ', history);
   return (
     <>
       <h2 style={{ fontSize: 'large', marginBottom: '1rem' }}>

@@ -9,7 +9,7 @@ import { calculateTotalIncome } from '../../features/utilities/totalUtilities';
 import { useDispatch } from 'react-redux';
 function Income() {
   const dispatch = useDispatch();
-  const incomes = useSelector((state) => state.incomes);
+  const incomes = useSelector((state) => state.incomes.incomes);
   useEffect(() => {
     getIncomes(dispatch);
   }, []);
@@ -49,7 +49,7 @@ function Income() {
                   type={type}
                   category={category}
                   indicatorColor='var(--color-green)'
-                  deleteItem={dispatch(deleteIncome)}
+                  deleteItem={deleteIncome}
                 />
               );
             })}

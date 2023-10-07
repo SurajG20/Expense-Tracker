@@ -26,7 +26,7 @@ function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addIncome(dispatch, inputState);
+    dispatch(addIncome(inputState));
     setInputState({
       title: '',
       amount: '',

@@ -10,9 +10,8 @@ function Navigation({ active, setActive }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.users.currentUser);
-  console.log('user From Navigation console :: ', user);
   const handleInput = () => {
-    logout(dispatch, user);
+    dispatch(logout(user));
     navigate('/login');
   };
   return (
@@ -20,7 +19,7 @@ function Navigation({ active, setActive }) {
       <div className='user-con'>
         <img src={avatar} alt='' />
         <div className='text'>
-          <h2>{user.username}</h2>
+          <h2>{user?.username}</h2>
           <p>Your Money</p>
         </div>
       </div>

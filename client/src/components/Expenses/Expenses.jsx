@@ -11,7 +11,7 @@ import {
 import { calculateTotalExpenses } from '../../features/utilities/totalUtilities';
 function Expenses() {
   const dispatch = useDispatch();
-  const expenses = useSelector((state) => state.expenses);
+  const expenses = useSelector((state) => state.expenses.expenses);
 
   useEffect(() => {
     getExpense(dispatch);
@@ -53,7 +53,7 @@ function Expenses() {
                   type={type}
                   category={category}
                   indicatorColor='var(--color-green)'
-                  deleteItem={dispatch(deleteExpense())}
+                  deleteItem={deleteExpense}
                 />
               );
             })}
