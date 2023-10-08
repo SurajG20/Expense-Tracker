@@ -4,15 +4,11 @@ import { InnerLayout } from '../../styles/Layouts';
 import Form from './IncomeForm';
 import IncomeItem from './IncomeItem';
 import { useSelector } from 'react-redux';
-import { getIncomes, deleteIncome } from '../../features/incomes/incomeActions';
+import { deleteIncome } from '../../features/incomes/incomeActions';
 import { calculateTotalIncome } from '../../features/utilities/totalUtilities';
-import { useDispatch } from 'react-redux';
 function Income() {
-  const dispatch = useDispatch();
   const incomes = useSelector((state) => state.incomes.incomes);
-  useEffect(() => {
-    getIncomes(dispatch);
-  }, []);
+
   return (
     <IncomeStyled>
       <InnerLayout

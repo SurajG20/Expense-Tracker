@@ -24,7 +24,7 @@ import {
 import Button from '../Button/Button';
 import { useDispatch } from 'react-redux';
 import { getIncomes } from '../../features/incomes/incomeActions';
-import { getExpenses } from '../../features/expenses/expenseActions';
+import { getExpense } from '../../features/expenses/expenseActions';
 function IncomeItem({
   id,
   title,
@@ -86,7 +86,7 @@ function IncomeItem({
   const handleDelete = () => {
     deleteItem(dispatch, id);
     getIncomes(dispatch);
-    getExpenses(dispatch);
+    getExpense(dispatch);
   };
   return (
     <IncomeItemStyled indicator={indicatorColor}>

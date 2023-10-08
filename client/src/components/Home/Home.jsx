@@ -1,11 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MainLayout } from '../../styles/Layouts';
 import Navigation from '../Navigation/Navigation';
 import Dashboard from '../Dashboard/Dashboard';
 import Incomes from '../Income/Income';
 import Expenses from '../Expenses/Expenses';
+import { getIncomes } from '../../features/incomes/incomeActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getExpense } from '../../features/expenses/expenseActions';
 function Home() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.users.currentUser);
+  useEffect(() => {
+    if (user) {
+      getIncomes(dispatch);
+      getExpense(dispatch);
+    }
+  }, []);
+
   const [active, setActive] = useState(1);
   const displayData = () => {
     switch (active) {

@@ -1,9 +1,10 @@
 import Home from '../components/Home/Home';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Login from '../components/Login/Login';
 import Register from '../components/Register/Register';
 import styled from 'styled-components';
 import PrivateRoutes from './PrivateRoutes';
+
 const App = () => {
   return (
     <AppStyled>

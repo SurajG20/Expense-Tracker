@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { userRequest } from '../../utils/requestMethods';
 
 const initialState = {
   currentUser: null,
@@ -31,16 +32,9 @@ const userSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     },
-    logoutStart(state) {
-      state.isFetching = true;
-    },
-    logoutSuccess(state, action) {
+    logout(state) {
       state.isFetching = false;
-      state.currentUser = null;
-    },
-    logoutFailure(state) {
-      state.isFetching = false;
-      state.error = true;
+      delete userRequest.defaults.headers.common['Authorization'];
     },
   },
 });
@@ -53,9 +47,6 @@ export const {
   registerStart,
   registerFailure,
   registerSuccess,
-  logoutFailure,
-  logoutStart,
-  logoutSuccess,
 } = userSlice.actions;
 
 export default userSlice.reducer;

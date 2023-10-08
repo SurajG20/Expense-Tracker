@@ -4,14 +4,14 @@ import { signout } from '../../utils/Icons';
 import { menuItems } from '../../utils/menuItems';
 import Button from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../../features/users/userActions';
+import { logout } from '../../features/users/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 function Navigation({ active, setActive }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.users.currentUser);
   const handleInput = () => {
-    dispatch(logout(user));
+    dispatch(logout());
     navigate('/login');
   };
   return (

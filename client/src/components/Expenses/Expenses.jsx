@@ -1,21 +1,13 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import { InnerLayout } from '../../styles/Layouts';
 import IncomeItem from '../Income/IncomeItem';
 import ExpenseForm from './ExpenseForm';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  getExpense,
-  deleteExpense,
-} from '../../features/expenses/expenseActions';
+import { useSelector } from 'react-redux';
+import { deleteExpense } from '../../features/expenses/expenseActions';
 import { calculateTotalExpenses } from '../../features/utilities/totalUtilities';
 function Expenses() {
-  const dispatch = useDispatch();
   const expenses = useSelector((state) => state.expenses.expenses);
 
-  useEffect(() => {
-    getExpense(dispatch);
-  }, []);
   return (
     <ExpenseStyled>
       <InnerLayout

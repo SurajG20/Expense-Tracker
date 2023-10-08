@@ -1,25 +1,16 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import History from './History';
 import { InnerLayout } from '../../styles/Layouts';
 import Chart from './Chart';
-import { useDispatch, useSelector } from 'react-redux';
-import { getIncomes } from '../../features/incomes/incomeActions';
-import { getExpense } from '../../features/expenses/expenseActions';
+import { useSelector } from 'react-redux';
 import {
   calculateTotalBalance,
   calculateTotalIncome,
   calculateTotalExpenses,
 } from '../../features/utilities/totalUtilities';
 function Dashboard() {
-  const dispatch = useDispatch();
   const incomes = useSelector((state) => state.incomes.incomes);
   const expenses = useSelector((state) => state.expenses.expenses);
-
-  useEffect(() => {
-    getIncomes(dispatch);
-    getExpense(dispatch);
-  }, []);
 
   return (
     <DashboardStyled>
