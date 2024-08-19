@@ -1,5 +1,7 @@
 import jwt, { Secret } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
+
+
 export const verifyToken = async (
   req: Request,
   res: Response,

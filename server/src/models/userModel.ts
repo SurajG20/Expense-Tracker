@@ -17,23 +17,20 @@ const UserSchema = new mongoose.Schema<UserDocument>(
     username: {
       type: String,
       maxLength: 20,
-      unique: true,
-      required: true,
+      required: true
     },
     password: {
       type: String,
       unique: true,
-      required: true,
+      required: true
     },
     email: {
       type: String,
       required: true,
-    },
+      unique: true
+    }
   },
   { timestamps: true }
 );
 
-export const userModel: Model<UserDocument> = mongoose.model<UserDocument>(
-  'User',
-  UserSchema
-);
+export const userModel: Model<UserDocument> = mongoose.model<UserDocument>('User', UserSchema);
