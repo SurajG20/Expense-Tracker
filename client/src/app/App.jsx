@@ -4,10 +4,13 @@ import Login from '../components/Login/Login';
 import Register from '../components/Register/Register';
 import styled from 'styled-components';
 import PrivateRoutes from './PrivateRoutes';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
     <AppStyled>
+      <ToastContainer />
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
@@ -20,7 +23,11 @@ const App = () => {
 };
 const AppStyled = styled.div`
   height: 100vh;
-  background: linear-gradient(to right, #3dabf2, #314755);
+  background-image: radial-gradient(
+    circle 311px at 8.6% 27.9%,
+    rgba(62, 147, 252, 0.57) 12.9%,
+    rgba(239, 183, 192, 0.44) 91.2%
+  );
   position: relative;
 `;
 export default App;

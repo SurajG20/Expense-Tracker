@@ -1,33 +1,45 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../Button/Button';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../features/users/userActions';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useLoginUserMutation } from '../../features/users/userSlice';
+import { toast } from 'react-toastify';
+import { setAuth } from '../../utils/requestMethods';
+
 function Login() {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.users.currentUser);
-  const [inputState, setInputState] = useState({
-    username: '',
-    password: '',
-  });
-  const { username, password } = inputState;
+  const [loginUser, { isLoading }] = useLoginUserMutation();
   const navigate = useNavigate();
+  const [inputState, setInputState] = useState({
+    email: '',
+    password: ''
+  });
+
+  const { email, password } = inputState;
+
   const handleInput = (name) => (e) => {
     setInputState({ ...inputState, [name]: e.target.value });
   };
-  useEffect(() => {
-    if (user) {
-      navigate('/');
-    }
-  });
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(login(inputState));
-    setInputState({
-      username: '',
-      password: '',
-    });
+
+    try {
+      const data = await loginUser(inputState).unwrap();
+      setAuth(data);
+      toast.success('Login successful!');
+      navigate('/');
+      setInputState({
+        email: '',
+        password: ''
+      });
+    } catch (err) {
+      console.error('Login failed', err);
+      if (err?.data?.message) {
+        toast.error(err.data.message);
+      } else {
+        toast.error('Invalid Credentials');
+      }
+    }
   };
 
   return (
@@ -38,17 +50,21 @@ function Login() {
           <div className='input-control'>
             <input
               type='text'
-              value={username}
-              name={'username'}
-              placeholder='Username'
-              onChange={handleInput('username')}
+              value={email}
+              id='email'
+              autoComplete='email'
+              name={'email'}
+              placeholder='Email'
+              onChange={handleInput('email')}
             />
           </div>
           <div className='input-control'>
             <input
+              id='password'
               value={password}
               type='password'
               name={'password'}
+              autoComplete='password'
               placeholder={'Password'}
               onChange={handleInput('password')}
             />
@@ -61,11 +77,12 @@ function Login() {
               bRad={'10px'}
               bg={'var(--color-accent)'}
               color={'#fff'}
+              disabled={isLoading}
             />
           </div>
+
           <p>
-            Do Not Have An Account ?,
-            <Link to='/register'>Register</Link>
+            Do not have an account?, <Link to='/register'>Register</Link>
           </p>
         </FormStyled>
       </div>
@@ -80,12 +97,12 @@ const MainContainer = styled.div`
   width: 100vw;
   height: 100vh;
   .form-content {
-    border: 2px solid lightblue;
     box-shadow:
       rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
       rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    padding: 5rem 3rem;
+    padding: 5rem 4rem;
     background-color: #edf1f3;
+    border-radius: 10px;
   }
 `;
 
@@ -93,16 +110,20 @@ const FormStyled = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
+  padding: 1rem;
+  h2 {
+    font-size: 2rem;
+    color: var(--color-accent);
+  }
   input {
     font-size: 1rem;
     outline: none;
     border: none;
-    padding: 0.6rem 1.6rem;
+    padding: 0.8rem 0.5rem;
     border-radius: 5px;
     border: 2px solid #898a9b;
     width: 100%;
-    opacity: 0.8;
   }
 
   .submit-btn {
@@ -122,4 +143,5 @@ const FormStyled = styled.form`
     }
   }
 `;
+
 export default Login;

@@ -1,52 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { userRequest } from '../../utils/requestMethods';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const initialState = {
-  currentUser: null,
-  isFetching: false,
-  error: false,
-};
-const userSlice = createSlice({
-  name: 'user',
-  initialState,
-  reducers: {
-    loginStart(state) {
-      state.isFetching = true;
-    },
-    loginSuccess(state, action) {
-      state.isFetching = false;
-      state.currentUser = action.payload;
-    },
-    loginFailure(state) {
-      state.isFetching = false;
-      state.error = true;
-    },
-    registerStart: (state) => {
-      state.isFetching = true;
-    },
-    registerSuccess: (state) => {
-      state.isFetching = false;
-      state.error = false;
-    },
-    registerFailure: (state) => {
-      state.isFetching = false;
-      state.error = true;
-    },
-    logout(state) {
-      state.isFetching = false;
-      delete userRequest.defaults.headers.common['Authorization'];
-    },
-  },
+export const authApi = createApi({
+  reducerPath: 'authApi',
+  baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_BASE_URL}` }),
+  endpoints: (builder) => ({
+    registerUser: builder.mutation({
+      query: ({ email, username, password }) => ({
+        url: 'auth/register',
+        method: 'POST',
+        body: { email, username, password }
+      })
+    }),
+
+    loginUser: builder.mutation({
+      query: ({ email, password }) => ({
+        url: 'auth/login',
+        method: 'POST',
+        body: { email, password }
+      })
+    })
+  })
 });
 
-export const {
-  loginStart,
-  loginSuccess,
-  loginFailure,
-  logout,
-  registerStart,
-  registerFailure,
-  registerSuccess,
-} = userSlice.actions;
-
-export default userSlice.reducer;
+export const { useRegisterUserMutation, useLoginUserMutation } = authApi;

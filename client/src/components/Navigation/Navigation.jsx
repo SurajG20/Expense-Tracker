@@ -1,36 +1,29 @@
 import styled from 'styled-components';
-import avatar from '../../assets/avatar.png';
 import { signout } from '../../utils/Icons';
 import { menuItems } from '../../utils/menuItems';
 import Button from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../../features/users/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { clearAuth, getAuth } from '../../utils/requestMethods';
+
 function Navigation({ active, setActive }) {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.users.currentUser);
+  const user = getAuth();
   const handleInput = () => {
-    dispatch(logout());
+    clearAuth();
     navigate('/login');
   };
+
   return (
     <NavStyled>
       <div className='user-con'>
-        <img src={avatar} alt='' />
         <div className='text'>
           <h2>{user?.username}</h2>
-          <p>Your Money</p>
         </div>
       </div>
       <ul className='menu-items'>
         {menuItems.map((item) => {
           return (
-            <li
-              key={item.id}
-              onClick={() => setActive(item.id)}
-              className={active === item.id ? 'active' : ''}
-            >
+            <li key={item.id} onClick={() => setActive(item.id)} className={active === item.id ? 'active' : ''}>
               {item.icon}
               <span>{item.title}</span>
             </li>
@@ -68,6 +61,12 @@ const NavStyled = styled.nav`
     display: flex;
     align-items: center;
     gap: 1rem;
+    .text {
+      border: 2px solid white;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      box-shadow: 0px 1px 17px rgba(0, 0, 0, 0.06);
+    }
     img {
       width: 50px;
       height: 50px;
@@ -79,7 +78,7 @@ const NavStyled = styled.nav`
       box-shadow: 0px 1px 17px rgba(0, 0, 0, 0.06);
     }
     h2 {
-      font-size: medium;
+      font-size: 1.7rem;
       text-transform: capitalize;
       color: rgba(34, 34, 96, 1);
     }
@@ -97,7 +96,7 @@ const NavStyled = styled.nav`
       display: grid;
       grid-template-columns: 40px auto;
       align-items: center;
-      margin: 0.6rem 0;
+      margin: 1rem 0;
       font-weight: 400;
       cursor: pointer;
       transition: all 0.4s ease-in-out;

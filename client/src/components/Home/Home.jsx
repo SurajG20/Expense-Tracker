@@ -6,19 +6,23 @@ import Dashboard from '../Dashboard/Dashboard';
 import Incomes from '../Income/Income';
 import Expenses from '../Expenses/Expenses';
 import { getIncomes } from '../../features/incomes/incomeActions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getExpense } from '../../features/expenses/expenseActions';
+import { getAuth } from '../../utils/requestMethods';
+
 function Home() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.users.currentUser);
+  const user = getAuth();
+
   useEffect(() => {
     if (user) {
       getIncomes(dispatch);
       getExpense(dispatch);
     }
-  }, []);
+  });
 
   const [active, setActive] = useState(1);
+
   const displayData = () => {
     switch (active) {
       case 1:
@@ -44,7 +48,11 @@ function Home() {
 
 const HomeContent = styled.div`
   height: 100vh;
-  background: linear-gradient(to right, #3dabf2, #314755);
+  background-image: radial-gradient(
+    circle 311px at 8.6% 27.9%,
+    rgba(62, 147, 252, 0.57) 12.9%,
+    rgba(239, 183, 192, 0.44) 91.2%
+  );
   position: relative;
   main {
     height: 100%;

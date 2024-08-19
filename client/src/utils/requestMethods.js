@@ -3,20 +3,28 @@ import axios from 'axios';
 const baseURL = 'http://localhost:5000/api/v1';
 
 export const publicRequest = axios.create({
-  baseURL: baseURL,
+  baseURL: baseURL
 });
 
 export const userRequest = axios.create({
-  baseURL: baseURL,
+  baseURL: baseURL
 });
 
+export const getAuth = () => {
+  const DATA = JSON.parse(localStorage.getItem('accessToken'));
+  return DATA;
+};
+export const setAuth = (data) => {
+  localStorage.setItem('accessToken', JSON.stringify(data));
+};
+export const clearAuth = () => {
+  localStorage.removeItem('accessToken');
+};
 userRequest.interceptors.request.use(
   function (config) {
-    const user = JSON.parse(localStorage.getItem('persist:root'))?.users;
-    const currentUser = user && JSON.parse(user).currentUser;
-    const TOKEN = currentUser?.token;
-    if (TOKEN) {
-      config.headers['Authorization'] = 'Bearer ' + TOKEN;
+    const { token } = getAuth();
+    if (token) {
+      config.headers['Authorization'] = 'Bearer ' + token;
     }
     return config;
   },

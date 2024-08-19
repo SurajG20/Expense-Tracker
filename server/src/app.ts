@@ -16,7 +16,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
 app.use('/api/v1', router);
-app.use('/api/v1', authRoutes);
+app.use('/api/v1/auth', authRoutes);
 
 const port: number = parseInt(process.env.PORT || '3000');
 
