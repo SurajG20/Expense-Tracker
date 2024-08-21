@@ -42,7 +42,6 @@ const expenseSlice = createSlice({
     },
     addExpensesSuccess: (state, action) => {
       state.isFetching = false;
-      console.log("Adding Payload Expense Slice", action.payload)
       state.expenses.push(action.payload);
     },
     addExpensesFailure: (state) => {

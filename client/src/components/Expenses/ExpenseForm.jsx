@@ -6,6 +6,7 @@ import Button from '../Button/Button';
 import { plus } from '../../utils/Icons';
 import { addExpense } from '../../features/expenses/expenseActions';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 function ExpenseForm() {
   const dispatch = useDispatch();
   const [inputState, setInputState] = useState({
@@ -13,7 +14,7 @@ function ExpenseForm() {
     amount: '',
     date: '',
     category: '',
-    description: '',
+    description: ''
   });
 
   const { title, amount, date, category, description } = inputState;
@@ -24,40 +25,38 @@ function ExpenseForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addExpense(dispatch, inputState);
-    setInputState({
-      title: '',
-      amount: '',
-      date: '',
-      category: '',
-      description: '',
-    });
+    try {
+      addExpense(dispatch, inputState);
+      setInputState({
+        title: '',
+        amount: '',
+        date: '',
+        category: '',
+        description: ''
+      });
+    } catch (error) {
+      toast.error('Failed to add expense');
+    }
   };
- 
+
   return (
     <ExpenseFormStyled onSubmit={handleSubmit}>
       <div className='input-control'>
-        <input
-          type='text'
-          value={title}
-          name={'title'}
-          placeholder='Expense Title'
-          onChange={handleInput('title')}
-        />
+        <input type='text' value={title} name={'title'} placeholder='Expense title' onChange={handleInput('title')} />
       </div>
       <div className='input-control'>
         <input
           value={amount}
           type='number'
           name={'amount'}
-          placeholder={'Expense Amount'}
+          placeholder={'Expense amount'}
           onChange={handleInput('amount')}
         />
       </div>
       <div className='input-control'>
         <DatePicker
           id='date'
-          placeholderText='Enter A Date'
+          placeholderText='Enter a date'
           selected={date}
           dateFormat='dd/MM/yyyy'
           onChange={(date) => {
@@ -66,13 +65,7 @@ function ExpenseForm() {
         />
       </div>
       <div className='selects input-control'>
-        <select
-          required
-          value={category}
-          name='category'
-          id='category'
-          onChange={handleInput('category')}
-        >
+        <select required value={category} name='category' id='category' onChange={handleInput('category')}>
           <option value='' disabled>
             Select Option
           </option>
@@ -90,10 +83,10 @@ function ExpenseForm() {
         <textarea
           name='description'
           value={description}
-          placeholder='Add A Reference'
+          placeholder='Description'
           id='description'
           cols='30'
-          rows='4'
+          rows='3'
           onChange={handleInput('description')}
         ></textarea>
       </div>
@@ -134,7 +127,7 @@ const ExpenseFormStyled = styled.form`
   }
   .input-control {
     input {
-      width: 80%;
+      width: 100%;
     }
   }
 

@@ -24,6 +24,7 @@ import {
 import Button from '../Button/Button';
 import { useDispatch } from 'react-redux';
 import { deleteExpense, getExpense } from '../../features/expenses/expenseActions';
+import { toast } from 'react-toastify';
 
 function ExpenseItem({ id, title, amount, date, category, description, indicatorColor, type }) {
   const dispatch = useDispatch();
@@ -69,7 +70,7 @@ function ExpenseItem({ id, title, amount, date, category, description, indicator
       case 'other':
         return circle;
       default:
-        return '';
+        return 'money';
     }
   };
 
@@ -79,8 +80,10 @@ function ExpenseItem({ id, title, amount, date, category, description, indicator
         getExpense(dispatch);
       })
       .catch((error) => {
-        console.error('Failed to delete income:', error);
+        console.log(error);
+        toast.error('Failed to delete income.');
       });
+      toast.success('Expense deleted successfully');
   };
 
   return (

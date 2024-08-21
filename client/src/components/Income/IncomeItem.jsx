@@ -24,6 +24,7 @@ import {
 import Button from '../Button/Button';
 import { useDispatch } from 'react-redux';
 import { deleteIncome, getIncomes } from '../../features/incomes/incomeActions';
+import { toast } from 'react-toastify';
 
 function IncomeItem({ id, title, amount, date, category, description, indicatorColor, type }) {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ function IncomeItem({ id, title, amount, date, category, description, indicatorC
       case 'other':
         return piggy;
       default:
-        return '';
+        return 'money';
     }
   };
 
@@ -79,8 +80,10 @@ function IncomeItem({ id, title, amount, date, category, description, indicatorC
         getIncomes(dispatch);
       })
       .catch((error) => {
-        console.error('Failed to delete income:', error);
+        console.log(error);
+        toast.error('Failed to delete income.');
       });
+      toast.success('Income deleted successfully');
   };
 
   return (

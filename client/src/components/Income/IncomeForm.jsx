@@ -6,6 +6,7 @@ import Button from '../Button/Button';
 import { plus } from '../../utils/Icons';
 import { addIncome } from '../../features/incomes/incomeActions';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 function Form() {
   const dispatch = useDispatch();
 
@@ -25,14 +26,18 @@ function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addIncome(dispatch, inputState);
-    setInputState({
-      title: '',
-      amount: '',
-      date: '',
-      category: '',
-      description: ''
-    });
+    try {
+      addIncome(dispatch, inputState);
+      setInputState({
+        title: '',
+        amount: '',
+        date: '',
+        category: '',
+        description: ''
+      });
+    } catch (error) {
+      toast.error('Failed to add income');
+    }
   };
 
   return (
@@ -45,14 +50,14 @@ function Form() {
           value={amount}
           type='number'
           name={'amount'}
-          placeholder={'Salary Amount'}
+          placeholder={'Income amount'}
           onChange={handleInput('amount')}
         />
       </div>
       <div className='input-control'>
         <DatePicker
           id='date'
-          placeholderText='Enter A Date'
+          placeholderText='Enter a date'
           selected={date}
           dateFormat='dd/MM/yyyy'
           onChange={(date) => {
@@ -123,7 +128,7 @@ const FormStyled = styled.form`
   }
   .input-control {
     input {
-      width: 80%;
+      width: 100%;
     }
   }
 
