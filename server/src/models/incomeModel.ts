@@ -9,7 +9,7 @@ const IncomeSchema = new Schema(
       required: true,
     },
     amount: {
-      type: Number,
+      type: String,
       maxLength: 20,
       trim: true,
       required: true,

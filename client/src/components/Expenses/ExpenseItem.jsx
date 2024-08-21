@@ -23,9 +23,9 @@ import {
 } from '../../utils/Icons';
 import Button from '../Button/Button';
 import { useDispatch } from 'react-redux';
-import { deleteIncome, getIncomes } from '../../features/incomes/incomeActions';
+import { deleteExpense, getExpense } from '../../features/expenses/expenseActions';
 
-function IncomeItem({ id, title, amount, date, category, description, indicatorColor, type }) {
+function ExpenseItem({ id, title, amount, date, category, description, indicatorColor, type }) {
   const dispatch = useDispatch();
   const categoryIcon = () => {
     switch (category) {
@@ -74,9 +74,9 @@ function IncomeItem({ id, title, amount, date, category, description, indicatorC
   };
 
   const handleDelete = () => {
-    deleteIncome(dispatch, id)
+    deleteExpense(dispatch, id)
       .then(() => {
-        getIncomes(dispatch);
+        getExpense(dispatch);
       })
       .catch((error) => {
         console.error('Failed to delete income:', error);
@@ -84,7 +84,7 @@ function IncomeItem({ id, title, amount, date, category, description, indicatorC
   };
 
   return (
-    <IncomeItemStyled $indicator={indicatorColor}>
+    <ExpenseItemStyled $indicator={indicatorColor}>
       <div className='icon'>{type === 'expense' ? expenseCatIcon() : categoryIcon()}</div>
       <div className='content'>
         <h5>{title}</h5>
@@ -114,11 +114,11 @@ function IncomeItem({ id, title, amount, date, category, description, indicatorC
           </div>
         </div>
       </div>
-    </IncomeItemStyled>
+    </ExpenseItemStyled>
   );
 }
 
-const IncomeItemStyled = styled.div`
+const ExpenseItemStyled = styled.div`
   background: #fcf6f9;
   border: 2px solid #ffffff;
   border-radius: 10px;
@@ -186,4 +186,4 @@ const IncomeItemStyled = styled.div`
   }
 `;
 
-export default IncomeItem;
+export default ExpenseItem;

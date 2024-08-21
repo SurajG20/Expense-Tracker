@@ -5,20 +5,19 @@ import ExpenseForm from './ExpenseForm';
 import { useSelector } from 'react-redux';
 import { deleteExpense } from '../../features/expenses/expenseActions';
 import { calculateTotalExpenses } from '../../features/utilities/totalUtilities';
+import ExpenseItem from './ExpenseItem';
 function Expenses() {
   const expenses = useSelector((state) => state.expenses.expenses);
-
+  console.log('Expenses from Expenses.jsx', expenses);
   return (
     <ExpenseStyled>
-      <InnerLayout
-        style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
-      >
+      <InnerLayout style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <h1>Expenses</h1>
         <div
           style={{
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'center'
           }}
         >
           <h2 className='total-income'>
@@ -31,11 +30,10 @@ function Expenses() {
             <ExpenseForm />
           </div>
           <div className='incomes'>
-            {expenses.map((income) => {
-              const { _id, title, amount, date, category, description, type } =
-                income;
+            {expenses.map((expense) => {
+              const { _id, title, amount, date, category, description, type } = expense;
               return (
-                <IncomeItem
+                <ExpenseItem
                   key={_id}
                   id={_id}
                   title={title}
@@ -44,8 +42,7 @@ function Expenses() {
                   date={date}
                   type={type}
                   category={category}
-                  indicatorColor='var(--color-green)'
-                  deleteItem={deleteExpense}
+                  indicatorColor='var(--color-delete)'
                 />
               );
             })}
@@ -76,7 +73,7 @@ const ExpenseStyled = styled.div`
     span {
       font-size: 1.8rem;
       font-weight: 700;
-      color: var(--color-green);
+      color: var(--color-delete);
     }
   }
   .income-content {

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const expenseSlice = createSlice({
-  name: 'income',
+  name: 'expenses',
   initialState: {
     expenses: [],
     isFetching: false,
@@ -26,10 +26,10 @@ const expenseSlice = createSlice({
     },
     deleteExpensesSuccess: (state, action) => {
       state.isFetching = false;
-      state.expenses = action.splice(
-        state.expenses.findIndex((i) => i._id === state.action.payload.id),
-        1
-      );
+      const index = state.expenses.findIndex((i) => i._id === action.payload.id);
+      if (index !== -1) {
+        state.expenses.splice(index, 1);
+      }
     },
     deleteExpensesFailure: (state) => {
       state.isFetching = false;
@@ -42,6 +42,7 @@ const expenseSlice = createSlice({
     },
     addExpensesSuccess: (state, action) => {
       state.isFetching = false;
+      console.log("Adding Payload Expense Slice", action.payload)
       state.expenses.push(action.payload);
     },
     addExpensesFailure: (state) => {

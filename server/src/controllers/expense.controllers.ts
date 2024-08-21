@@ -10,20 +10,15 @@ export const addExpense = async (req: Request, res: Response) => {
     date,
     category,
     description,
-    user: userId,
+    user: userId
   });
   try {
     // Validations
-    if (!title || !category || !description || !date) {
+    if (!title || !category || !description || !date || !amount) {
       return res.status(400).json({ message: 'All fields are required!' });
     }
-    if (typeof Number(amount) !== 'number' || amount <= 0) {
-      return res
-        .status(400)
-        .json({ message: 'Amount must be a positive number!' });
-    }
     await expense.save();
-    res.status(200).json({ message: 'Expense Added' });
+    res.status(200).json(expense);
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });
   }
@@ -33,9 +28,9 @@ export const getExpense = async (req: Request, res: Response) => {
   const userId = req.user.userId;
   try {
     const expenses = await ExpenseModel.find({
-      user: userId,
+      user: userId
     }).sort({
-      createdAt: -1,
+      createdAt: -1
     });
     res.status(200).json(expenses);
   } catch (error) {
@@ -43,17 +38,14 @@ export const getExpense = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteExpense = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const deleteExpense = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   const userId = req.user.userId;
 
   try {
     const expense = await ExpenseModel.findByIdAndDelete({
       _id: id,
-      user: userId,
+      user: userId
     });
     if (expense) {
       res.status(200).json({ message: 'Expense Deleted' });

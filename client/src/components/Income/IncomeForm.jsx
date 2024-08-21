@@ -14,14 +14,13 @@ function Form() {
     amount: '',
     date: '',
     category: '',
-    description: '',
+    description: ''
   });
 
   const { title, amount, date, category, description } = inputState;
 
   const handleInput = (name) => (e) => {
     setInputState({ ...inputState, [name]: e.target.value });
-    // setError('');
   };
 
   const handleSubmit = (e) => {
@@ -32,26 +31,19 @@ function Form() {
       amount: '',
       date: '',
       category: '',
-      description: '',
+      description: ''
     });
   };
 
   return (
     <FormStyled onSubmit={handleSubmit}>
-      {/* {error && <p className='error'>{error}</p>} */}
       <div className='input-control'>
-        <input
-          type='text'
-          value={title}
-          name={'title'}
-          placeholder='Salary Title'
-          onChange={handleInput('title')}
-        />
+        <input type='text' value={title} name={'title'} placeholder='Salary Title' onChange={handleInput('title')} />
       </div>
       <div className='input-control'>
         <input
           value={amount}
-          type='text'
+          type='number'
           name={'amount'}
           placeholder={'Salary Amount'}
           onChange={handleInput('amount')}
@@ -69,13 +61,7 @@ function Form() {
         />
       </div>
       <div className='selects input-control'>
-        <select
-          required
-          value={category}
-          name='category'
-          id='category'
-          onChange={handleInput('category')}
-        >
+        <select required value={category} name='category' id='category' onChange={handleInput('category')}>
           <option value='' disabled>
             Select Option
           </option>
@@ -93,7 +79,7 @@ function Form() {
         <textarea
           name='description'
           value={description}
-          placeholder='Add A Reference'
+          placeholder='Description'
           id='description'
           cols='30'
           rows='4'

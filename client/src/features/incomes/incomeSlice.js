@@ -5,7 +5,7 @@ const incomeSlice = createSlice({
   initialState: {
     incomes: [],
     isFetching: false,
-    error: false,
+    error: false
   },
   reducers: {
     getIncomesStart: (state) => {
@@ -26,10 +26,10 @@ const incomeSlice = createSlice({
     },
     deleteIncomesSuccess: (state, action) => {
       state.isFetching = false;
-      state.incomes = action.splice(
-        state.incomes.findIndex((i) => i._id === state.action.payload.id),
-        1
-      );
+      const index = state.incomes.findIndex((i) => i._id === action.payload.id);
+      if (index !== -1) {
+        state.incomes.splice(index, 1);
+      }
     },
     deleteIncomesFailure: (state) => {
       state.isFetching = false;
@@ -47,8 +47,8 @@ const incomeSlice = createSlice({
     addIncomesFailure: (state) => {
       state.isFetching = false;
       state.error = true;
-    },
-  },
+    }
+  }
 });
 
 export const {

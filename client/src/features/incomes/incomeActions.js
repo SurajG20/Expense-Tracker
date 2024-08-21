@@ -1,4 +1,5 @@
 import { userRequest } from '../../utils/requestMethods';
+
 import {
   getIncomesStart,
   getIncomesSuccess,
@@ -8,14 +9,18 @@ import {
   deleteIncomesSuccess,
   addIncomesStart,
   addIncomesSuccess,
-  addIncomesFailure,
+  addIncomesFailure
 } from './incomeSlice';
 
 export const getIncomes = async (dispatch) => {
   dispatch(getIncomesStart());
   try {
     const res = await userRequest.get('/get-incomes');
-    dispatch(getIncomesSuccess(res.data));
+    const incomes = res.data.map((income) => ({
+      ...income,
+      date: new Date(income.date).toISOString()
+    }));
+    dispatch(getIncomesSuccess(incomes));
   } catch (error) {
     dispatch(getIncomesFailure());
   }
@@ -34,8 +39,12 @@ export const deleteIncome = async (dispatch, id) => {
 export const addIncome = async (dispatch, data) => {
   dispatch(addIncomesStart());
   try {
-    await userRequest.post('/add-income/', data);
-    dispatch(addIncomesSuccess(data));
+    const formattedData = {
+      ...data,
+      date: new Date(data.date).toISOString()
+    };
+    const Response = await userRequest.post('/add-income/', formattedData);
+    dispatch(addIncomesSuccess(Response.data));
   } catch (error) {
     dispatch(addIncomesFailure());
   }

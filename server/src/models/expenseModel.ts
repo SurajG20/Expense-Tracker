@@ -6,37 +6,37 @@ const ExpenseSchema = new Schema(
       type: String,
       maxLength: 50,
       trim: true,
-      required: true,
+      required: true
     },
     amount: {
-      type: Number,
+      type: String,
       maxLength: 20,
       trim: true,
-      required: true,
+      required: true
     },
     type: {
       type: String,
-      default: 'expense',
+      default: 'expense'
     },
     date: {
       type: Date,
       required: true,
-      trim: true,
+      trim: true
     },
     category: {
       type: String,
       required: true,
-      trim: true,
+      trim: true
     },
     description: {
       type: String,
       required: true,
       trim: true,
-      maxLength: 20,
+      maxLength: 20
     },
     user: {
-      type: String,
-    },
+      type: String
+    }
   },
   { timestamps: true }
 );

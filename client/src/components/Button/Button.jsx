@@ -11,6 +11,7 @@ function Button({ name, icon, onClick, bg, bPad, color, bRad, isLoading }) {
       }}
       disabled={isLoading}
       onClick={onClick}
+      type='submit'
     >
       {icon}
       {name}

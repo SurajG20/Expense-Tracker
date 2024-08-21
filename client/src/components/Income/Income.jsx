@@ -1,25 +1,21 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import { InnerLayout } from '../../styles/Layouts';
 import Form from './IncomeForm';
 import IncomeItem from './IncomeItem';
 import { useSelector } from 'react-redux';
-import { deleteIncome } from '../../features/incomes/incomeActions';
 import { calculateTotalIncome } from '../../features/utilities/totalUtilities';
 function Income() {
   const incomes = useSelector((state) => state.incomes.incomes);
 
   return (
     <IncomeStyled>
-      <InnerLayout
-        style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
-      >
+      <InnerLayout style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <h1>Incomes</h1>
         <div
           style={{
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'center'
           }}
         >
           <h2 className='total-income'>
@@ -32,11 +28,10 @@ function Income() {
           </div>
           <div className='incomes'>
             {incomes.map((income) => {
-              const { _id, title, amount, date, category, description, type } =
-                income;
+              const { _id, title, amount, date, category, description, type } = income;
               return (
                 <IncomeItem
-                  key={_id}
+                  key={income._id}
                   id={_id}
                   title={title}
                   description={description}
@@ -45,7 +40,6 @@ function Income() {
                   type={type}
                   category={category}
                   indicatorColor='var(--color-green)'
-                  deleteItem={deleteIncome}
                 />
               );
             })}

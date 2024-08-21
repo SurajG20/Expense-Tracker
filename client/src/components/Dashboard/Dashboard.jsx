@@ -8,6 +8,7 @@ import {
   calculateTotalIncome,
   calculateTotalExpenses,
 } from '../../features/utilities/totalUtilities';
+
 function Dashboard() {
   const incomes = useSelector((state) => state.incomes.incomes);
   const expenses = useSelector((state) => state.expenses.expenses);

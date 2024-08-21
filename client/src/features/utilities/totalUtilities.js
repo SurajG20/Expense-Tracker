@@ -1,9 +1,9 @@
 export const calculateTotalIncome = (incomes) => {
-  return incomes.reduce((total, income) => total + income.amount, 0);
+  return incomes.reduce((total, income) => total + Number(income.amount), 0);
 };
 
 export const calculateTotalExpenses = (expenses) => {
-  return expenses.reduce((total, expense) => total + expense.amount, 0);
+  return expenses.reduce((total, expense) => total + Number(expense.amount), 0);
 };
 
 export const calculateTotalBalance = (incomes, expenses) => {

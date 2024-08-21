@@ -20,7 +20,6 @@ function ExpenseForm() {
 
   const handleInput = (name) => (e) => {
     setInputState({ ...inputState, [name]: e.target.value });
-    // setError('');
   };
 
   const handleSubmit = (e) => {
@@ -34,13 +33,9 @@ function ExpenseForm() {
       description: '',
     });
   };
-  // setTimeout(() => {
-  //   setError('');
-  // }, 5000);
-
+ 
   return (
     <ExpenseFormStyled onSubmit={handleSubmit}>
-      {/* {error && <p className='error'>{error}</p>} */}
       <div className='input-control'>
         <input
           type='text'
@@ -53,7 +48,7 @@ function ExpenseForm() {
       <div className='input-control'>
         <input
           value={amount}
-          type='text'
+          type='number'
           name={'amount'}
           placeholder={'Expense Amount'}
           onChange={handleInput('amount')}

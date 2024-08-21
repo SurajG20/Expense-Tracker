@@ -33,7 +33,7 @@ function Navigation({ active, setActive }) {
       <div className='bottom-nav'>
         <Button
           onClick={handleInput}
-          name={'SignOut'}
+          name={'Sign Out'}
           icon={signout}
           bPad={'.3rem .6rem'}
           bRad={'20px'}
