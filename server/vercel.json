@@ -7,9 +7,9 @@
       "use": "@vercel/node"
     },
     {
-      "src": "public/**/*",
+      "src": "src/**/*",
       "use": "@vercel/static"
     }
   ],
-  "routes": [{ "src": "/api/(.*)", "dest": "/build/app.js" }]
+  "routes": [{ "src": "/(.*)", "dest": "/" }]
 }
