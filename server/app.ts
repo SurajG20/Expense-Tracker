@@ -15,6 +15,10 @@ app.use(morgan('dev'));
 // middleware
 app.use(express.json());
 app.use(cors());
+
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
 app.use('/api/v1', router);
 app.use('/api/v1/auth', authRoutes);
 
