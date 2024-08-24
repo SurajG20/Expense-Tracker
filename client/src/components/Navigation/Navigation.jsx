@@ -30,7 +30,14 @@ function Navigation({ active, setActive }) {
         </div>
         <ul className='menu-items'>
           {menuItems.map((item) => (
-            <li key={item.id} onClick={() => setActive(item.id)} className={active === item.id ? 'active' : ''}>
+            <li
+              key={item.id}
+              onClick={() => {
+                setActive(item.id);
+                setIsOpen(!isOpen);
+              }}
+              className={active === item.id ? 'active' : ''}
+            >
               {item.icon}
               <span>{item.title}</span>
             </li>
@@ -52,7 +59,6 @@ function Navigation({ active, setActive }) {
         <Button
           onClick={toggleMenu}
           bPad={'.3rem .6rem'}
-
           bRad={'20px'}
           bg={'var(--color-gray'}
           color={'#222260'}
