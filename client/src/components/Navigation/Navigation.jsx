@@ -1,47 +1,65 @@
 import styled from 'styled-components';
-import { signout } from '../../utils/Icons';
+import { HamburgerIcon, signout } from '../../utils/Icons';
 import { menuItems } from '../../utils/menuItems';
 import Button from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { clearAuth, getAuth } from '../../utils/requestMethods';
+import { useState } from 'react';
 
 function Navigation({ active, setActive }) {
   const navigate = useNavigate();
   const user = getAuth();
+  const [isOpen, setIsOpen] = useState(false);
+
   const handleInput = () => {
     clearAuth();
     navigate('/login');
   };
 
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <NavStyled>
-      <div className='user-con'>
-        <div className='text'>
-          <h2>{user?.username}</h2>
+    <>
+      <NavStyled isOpen={isOpen}>
+        <div className='user-con'>
+          <div className='text'>
+            <h2>{user?.username}</h2>
+          </div>
         </div>
-      </div>
-      <ul className='menu-items'>
-        {menuItems.map((item) => {
-          return (
+        <ul className='menu-items'>
+          {menuItems.map((item) => (
             <li key={item.id} onClick={() => setActive(item.id)} className={active === item.id ? 'active' : ''}>
               {item.icon}
               <span>{item.title}</span>
             </li>
-          );
-        })}
-      </ul>
-      <div className='bottom-nav'>
+          ))}
+        </ul>
+        <div className='bottom-nav'>
+          <Button
+            onClick={handleInput}
+            name={'Sign Out'}
+            icon={signout}
+            bPad={'.3rem .6rem'}
+            bRad={'20px'}
+            bg={'var(--color-gray'}
+            color={'lightcoral'}
+          />
+        </div>
+      </NavStyled>
+      <Hamburger>
         <Button
-          onClick={handleInput}
-          name={'Sign Out'}
-          icon={signout}
+          onClick={toggleMenu}
           bPad={'.3rem .6rem'}
+
           bRad={'20px'}
           bg={'var(--color-gray'}
-          color={'lightcoral'}
-        />
-      </div>
-    </NavStyled>
+          color={'#222260'}
+          icon={HamburgerIcon}
+        ></Button>
+      </Hamburger>
+    </>
   );
 }
 
@@ -56,6 +74,19 @@ const NavStyled = styled.nav`
   flex-direction: column;
   justify-content: space-between;
   gap: 2rem;
+  position: relative;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    left: ${(props) => (props.isOpen ? '0' : '-100%')};
+    top: 0;
+    height: 100vh;
+    z-index: 20;
+    transition: left 0.3s ease;
+    padding: 1rem;
+    width: 240px;
+  }
+
   .user-con {
     height: 100px;
     display: flex;
@@ -81,10 +112,16 @@ const NavStyled = styled.nav`
       font-size: 1.7rem;
       text-transform: capitalize;
       color: rgba(34, 34, 96, 1);
+      @media (max-width: 768px) {
+        font-size: 1.2rem;
+      }
     }
     p {
       font-size: medium;
       color: rgba(34, 34, 96, 0.6);
+      @media (max-width: 768px) {
+        font-size: 0.9rem;
+      }
     }
   }
 
@@ -105,6 +142,9 @@ const NavStyled = styled.nav`
       position: relative;
       span {
         font-size: 1.1rem;
+        @media (max-width: 768px) {
+          font-size: 0.9rem;
+        }
       }
       i {
         color: rgba(34, 34, 96, 0.6);
@@ -113,9 +153,11 @@ const NavStyled = styled.nav`
       }
     }
   }
+
   .bottom-nav {
     font-size: medium;
   }
+
   .active {
     color: rgba(34, 34, 96, 1) !important;
     i {
@@ -131,6 +173,23 @@ const NavStyled = styled.nav`
       background: #222260;
       border-radius: 0 10px 10px 0;
     }
+  }
+`;
+
+const Hamburger = styled.div`
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 20px;
+  width: 40px;
+  height: 40px;
+  left: 20px;
+  z-index: 50;
+
+  @media (max-width: 768px) {
+    display: flex;
   }
 `;
 

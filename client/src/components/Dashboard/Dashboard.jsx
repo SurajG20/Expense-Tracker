@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import {
   calculateTotalBalance,
   calculateTotalIncome,
-  calculateTotalExpenses,
+  calculateTotalExpenses
 } from '../../features/utilities/totalUtilities';
 
 function Dashboard() {
@@ -36,19 +36,21 @@ function Dashboard() {
           </div>
           <div className='history-con'>
             <History />
-            <h2 className='salary-title'>
-              Min <span>Salary</span>Max
-            </h2>
-            <div className='salary-item'>
-              <p>₹{Math.min(...incomes.map((item) => item.amount))}</p>
-              <p>₹{Math.max(...incomes.map((item) => item.amount))}</p>
-            </div>
-            <h2 className='salary-title'>
-              Min <span>Expense</span>Max
-            </h2>
-            <div className='salary-item'>
-              <p>₹{Math.min(...expenses.map((item) => item.amount))}</p>
-              <p>₹{Math.max(...expenses.map((item) => item.amount))}</p>
+            <div className='salary-container'>
+              <h2 className='salary-title'>
+                Min <span>Salary</span>Max
+              </h2>
+              <div className='salary-item'>
+                <p>₹{Math.min(...incomes.map((item) => item.amount))}</p>
+                <p>₹{Math.max(...incomes.map((item) => item.amount))}</p>
+              </div>
+              <h2 className='salary-title'>
+                Min <span>Expense</span>Max
+              </h2>
+              <div className='salary-item'>
+                <p>₹{Math.min(...expenses.map((item) => item.amount))}</p>
+                <p>₹{Math.max(...expenses.map((item) => item.amount))}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -62,14 +64,29 @@ const DashboardStyled = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
     .chart-con {
-      /* grid-column: 1 / 3; */
       height: 240px;
+
+      @media (max-width: 768px) {
+        height: auto;
+      }
+
       .amount-con {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
         margin-top: 1rem;
+
+        @media (max-width: 768px) {
+          grid-template-columns: 1fr;
+          gap: 0.8rem;
+        }
 
         .income,
         .expense,
@@ -81,14 +98,27 @@ const DashboardStyled = styled.div`
           display: flex;
           flex-direction: column;
           gap: 1rem;
+
+          @media (max-width: 768px) {
+            padding: 0.8rem;
+          }
+
           h2 {
             font-size: 1rem;
             text-align: center;
+
+            @media (max-width: 768px) {
+              font-size: 0.9rem;
+            }
           }
           p {
             text-align: center;
             font-size: 1rem;
             font-weight: 500;
+
+            @media (max-width: 768px) {
+              font-size: 0.9rem;
+            }
           }
         }
       }
@@ -97,30 +127,60 @@ const DashboardStyled = styled.div`
     .history-con {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      h2 {
+      gap: 2rem;
+      .salary-container {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .salary-title {
-        font-size: 1rem;
-        span {
-          font-size: 1.2rem;
+        flex-direction: column;
+        gap: 1rem;
+
+        h2 {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          @media (max-width: 768px) {
+            font-size: 0.9rem;
+          }
         }
-      }
-      .salary-item {
-        background: #fcf6f9;
-        border: 2px solid #ffffff;
-        box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
-        padding: 0.8rem;
-        border-radius: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        p {
-          font-weight: 600;
-          font-size: 1.1rem;
+
+        .salary-title {
+          font-size: 1rem;
+
+          @media (max-width: 768px) {
+            font-size: 0.9rem;
+          }
+
+          span {
+            font-size: 1.2rem;
+
+            @media (max-width: 768px) {
+              font-size: 1.1rem;
+            }
+          }
+        }
+
+        .salary-item {
+          background: #fcf6f9;
+          border: 2px solid #ffffff;
+          box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
+          padding: 0.8rem;
+          border-radius: 10px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          @media (max-width: 768px) {
+            padding: 0.6rem;
+          }
+
+          p {
+            font-weight: 600;
+            font-size: 1.1rem;
+
+            @media (max-width: 768px) {
+              font-size: 1rem;
+            }
+          }
         }
       }
     }

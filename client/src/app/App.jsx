@@ -29,5 +29,13 @@ const AppStyled = styled.div`
     rgba(239, 183, 192, 0.44) 91.2%
   );
   position: relative;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    height: auto;
+    min-height: 100vh;
+    overflow: auto;
+  }
 `;
+
 export default App;

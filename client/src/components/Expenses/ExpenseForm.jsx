@@ -86,7 +86,7 @@ function ExpenseForm() {
           placeholder='Description'
           id='description'
           cols='30'
-          rows='3'
+          rows='4'
           onChange={handleInput('description')}
         ></textarea>
       </div>

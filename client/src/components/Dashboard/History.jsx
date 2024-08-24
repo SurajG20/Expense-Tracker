@@ -8,7 +8,7 @@ function History() {
   const [...history] = getTransactionHistory(incomes, expenses);
   return (
     <>
-      <h2 style={{ fontSize: 'large', marginBottom: '1rem' }}>
+      <h2 style={{ fontSize: 'large'}}>
         Recent History
       </h2>
       <HistoryStyled>

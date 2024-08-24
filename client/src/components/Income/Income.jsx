@@ -75,6 +75,9 @@ const IncomeStyled = styled.div`
   }
   .income-content {
     display: flex;
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
     gap: 2rem;
     .incomes {
       flex: 1;

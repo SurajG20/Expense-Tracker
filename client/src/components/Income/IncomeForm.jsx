@@ -43,7 +43,7 @@ function Form() {
   return (
     <FormStyled onSubmit={handleSubmit}>
       <div className='input-control'>
-        <input type='text' value={title} name={'title'} placeholder='Salary Title' onChange={handleInput('title')} />
+        <input type='text' value={title} name={'title'} placeholder='Income Title' onChange={handleInput('title')} />
       </div>
       <div className='input-control'>
         <input

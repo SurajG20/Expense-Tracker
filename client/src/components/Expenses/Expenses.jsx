@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 import { InnerLayout } from '../../styles/Layouts';
-import IncomeItem from '../Income/IncomeItem';
 import ExpenseForm from './ExpenseForm';
 import { useSelector } from 'react-redux';
-import { deleteExpense } from '../../features/expenses/expenseActions';
+
 import { calculateTotalExpenses } from '../../features/utilities/totalUtilities';
 import ExpenseItem from './ExpenseItem';
+
 function Expenses() {
   const expenses = useSelector((state) => state.expenses.expenses);
-  console.log('Expenses from Expenses.jsx', expenses);
   return (
     <ExpenseStyled>
       <InnerLayout style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -78,6 +77,9 @@ const ExpenseStyled = styled.div`
   }
   .income-content {
     display: flex;
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
     gap: 2rem;
     .incomes {
       flex: 1;

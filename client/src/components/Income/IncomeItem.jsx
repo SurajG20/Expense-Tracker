@@ -132,6 +132,12 @@ const IncomeItemStyled = styled.div`
   gap: 1rem;
   width: 100%;
   color: #222260;
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
   .icon {
     width: 40px;
     height: 40px;
@@ -141,8 +147,17 @@ const IncomeItemStyled = styled.div`
     align-items: center;
     justify-content: center;
     border: 2px solid #ffffff;
+    @media (max-width: 768px) {
+      width: 35px;
+      height: 35px;
+    }
+
     i {
       font-size: 1.2rem;
+
+      @media (max-width: 768px) {
+        font-size: 1rem;
+      }
     }
   }
 
@@ -155,6 +170,10 @@ const IncomeItemStyled = styled.div`
       font-size: 1rem;
       padding-left: 2rem;
       position: relative;
+      @media (max-width: 768px) {
+        font-size: 1.1rem;
+        padding-left: 1.5rem;
+      }
       &::before {
         content: '';
         position: absolute;
@@ -165,6 +184,10 @@ const IncomeItemStyled = styled.div`
         height: 0.8rem;
         border-radius: 50%;
         background: ${(props) => props.$indicator};
+        @media (max-width: 768px) {
+          width: 0.6rem;
+          height: 0.6rem;
+        }
       }
     }
 
@@ -172,10 +195,22 @@ const IncomeItemStyled = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: center;
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+      }
       .text {
         display: flex;
         align-items: center;
         gap: 1.5rem;
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+          align-items: center;
+          gap: 0.6rem;
+        }
+
         p {
           font-size: medium;
           display: flex;
@@ -183,6 +218,9 @@ const IncomeItemStyled = styled.div`
           gap: 0.5rem;
           color: var(--primary-color);
           opacity: 0.8;
+          @media (max-width: 768px) {
+            font-size: 0.9rem;
+          }
         }
       }
     }

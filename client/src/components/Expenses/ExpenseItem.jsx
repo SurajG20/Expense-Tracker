@@ -28,6 +28,7 @@ import { toast } from 'react-toastify';
 
 function ExpenseItem({ id, title, amount, date, category, description, indicatorColor, type }) {
   const dispatch = useDispatch();
+
   const categoryIcon = () => {
     switch (category) {
       case 'salary':
@@ -70,7 +71,7 @@ function ExpenseItem({ id, title, amount, date, category, description, indicator
       case 'other':
         return circle;
       default:
-        return 'money';
+        return money;
     }
   };
 
@@ -81,9 +82,9 @@ function ExpenseItem({ id, title, amount, date, category, description, indicator
       })
       .catch((error) => {
         console.log(error);
-        toast.error('Failed to delete income.');
+        toast.error('Failed to delete expense.');
       });
-      toast.success('Expense deleted successfully');
+    toast.success('Expense deleted successfully');
   };
 
   return (
@@ -100,8 +101,7 @@ function ExpenseItem({ id, title, amount, date, category, description, indicator
               {calender} {dateFormat(date)}
             </p>
             <p>
-              {comment}
-              {description}
+              {comment} {description}
             </p>
           </div>
           <div className='btn-con'>
@@ -132,6 +132,13 @@ const ExpenseItemStyled = styled.div`
   gap: 1rem;
   width: 100%;
   color: #222260;
+
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
   .icon {
     width: 40px;
     height: 40px;
@@ -141,8 +148,18 @@ const ExpenseItemStyled = styled.div`
     align-items: center;
     justify-content: center;
     border: 2px solid #ffffff;
+
+    @media (max-width: 768px) {
+      width: 35px;
+      height: 35px;
+    }
+
     i {
       font-size: 1.2rem;
+
+      @media (max-width: 768px) {
+        font-size: 1rem;
+      }
     }
   }
 
@@ -150,11 +167,18 @@ const ExpenseItemStyled = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 0.4rem;
+
     h5 {
       font-size: 1rem;
       padding-left: 2rem;
       position: relative;
+
+      @media (max-width: 768px) {
+        font-size: 1.1rem;
+        padding-left: 1.5rem;
+      }
+
       &::before {
         content: '';
         position: absolute;
@@ -165,6 +189,11 @@ const ExpenseItemStyled = styled.div`
         height: 0.8rem;
         border-radius: 50%;
         background: ${(props) => props.$indicator};
+
+        @media (max-width: 768px) {
+          width: 0.6rem;
+          height: 0.6rem;
+        }
       }
     }
 
@@ -172,10 +201,24 @@ const ExpenseItemStyled = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+      }
+
       .text {
         display: flex;
         align-items: center;
         gap: 1.5rem;
+
+        @media (max-width: 768px) {
+          flex-direction: column;
+          align-items: center;
+          gap: 0.6rem;
+        }
+
         p {
           font-size: medium;
           display: flex;
@@ -183,6 +226,10 @@ const ExpenseItemStyled = styled.div`
           gap: 0.5rem;
           color: var(--primary-color);
           opacity: 0.8;
+
+          @media (max-width: 768px) {
+            font-size: 0.9rem;
+          }
         }
       }
     }
