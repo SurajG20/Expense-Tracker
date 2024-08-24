@@ -15,7 +15,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/*"],
+  "include": ["src/*", "routes", "app.ts", "models", "middlewares", "db", "controllers"],
   "exclude": ["node_modules"],
   "files": ["types.d.ts"]
 }
