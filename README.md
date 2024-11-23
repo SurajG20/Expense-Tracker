@@ -1,9 +1,30 @@
-# Expense-Tracker
+<!-- Server update to mySql -->
 
-<!-- Redux persist -->
-<!-- Responsive design, upload Project -->
+Register
+username,email and password
 
-<!-- then update portfolio and resume and then starts applying hard
+Login 
+Email, password - jwt autheticate
 
-linkedin,with connect message
-everywhere -->
+Income and expense
+IncomeExpenseModel
+title - string,char255
+amount - string
+type - Income, expense
+date 
+category - string, trim
+description - description of our payment
+userId - from user model
+timestamps
+
+
+router
+  .post('/register', Register)
+  .post('/login', Login)
+  .post('/logout', Logout);
+
+crud routes for updating incomeexpense model
+
+
+
+User Model can have multiple income and expense model
