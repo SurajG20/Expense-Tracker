@@ -7,6 +7,7 @@ import logger from "./common/logger.js";
 
 import middlewares from "./middlewares/middlewares.js";
 import { RATE_LIMIT_OPTIONS, rateLimit } from "./common/rateLimiter.js";
+import config from "./config/config.js";
 const app = express();
 
 app.set("trust proxy", 1);
@@ -14,7 +15,9 @@ app.use(helmet({ crossOriginResourcePolicy: false }));
 app.use(express.json());
 app.use(cors());
 
-app.use(logger);
+if (config.FILE_LOGGER == "true") {
+  app.use(logger);
+}
 
 app.use(rateLimit(RATE_LIMIT_OPTIONS(10, 60)));
 

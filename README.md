@@ -28,22 +28,26 @@ User Model can have multiple income and expense model
 
 <!-- Features -->
 
-Morgan logger using file system. Config and max files, gip
-Rate limiter
-Controllers
-Mysql with all config
-models, migration and seeders
-routes with version system
-validation with zod, body query and params
-custom validation like unique and exists
-app container
-eslint integrated
+## TODO
 
-Token with RSA encrypt with private and public key
-https://travistidwell.com/jsencrypt/demo/
-
-Nodemailer with configuration
-Sentry for error handling in production
-Socket with setup with events
-caching
-cron jobs
+- [Y] Morgan logger using file system
+  - Config and max files
+  - Gzip - done
+- [Y] Rate limiter
+- [Y] Controllers
+- [x] MySQL with all config
+  - Models
+  - Migration and seeders - Remaining
+- [Y] Routes with version system
+- [Y] Validation with Zod
+  - Body, query, and params
+  - Custom validation like unique and exists. Remaining
+- [Y] App container
+- [Y] ESLint integrated
+- [x] Token with RSA encryption using private and public key
+  - [JS Encrypt Demo](https://travistidwell.com/jsencrypt/demo/)
+- [x] Nodemailer with configuration
+- [x] Sentry for error handling in production
+- [x] Socket setup with events
+- [x] Caching
+- [x] Cron jobs
