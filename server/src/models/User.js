@@ -8,17 +8,19 @@ const UserModel = Model.define(
       autoIncrement: true,
       primaryKey: true,
     },
+    userID: {
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
+    },
     username: {
       type: Sequelize.STRING,
-      allowNull: true,
     },
-    Email: {
+    email: {
       type: Sequelize.STRING,
-      allowNull: true,
+      unique: true,
     },
     password: {
       type: Sequelize.STRING,
-      allowNull: true,
     },
   },
   {

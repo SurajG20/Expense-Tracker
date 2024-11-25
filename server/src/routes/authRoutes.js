@@ -5,12 +5,19 @@ import { validateData } from "../middlewares/validation.js";
 const router = express.Router();
 
 router.post(
-  "/login/:id",
+  "/login",
   validateData({
     bodySchema: AuthValidate.userLoginSchema,
-    paramsSchema: AuthValidate.paramsSchema,
   }),
   AuthControllers.Login
+);
+
+router.post(
+  "/register",
+  validateData({
+    bodySchema: AuthValidate.userRegistrationSchema,
+  }),
+  AuthControllers.Register
 );
 
 export default router;

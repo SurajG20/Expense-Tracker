@@ -1,5 +1,5 @@
 import express from "express";
-import authRoutes from "./authRoutes.js";
+import authRoutes from "./AuthRoutes.js";
 import { RATE_LIMIT_OPTIONS, rateLimit } from "../common/rateLimiter.js";
 
 const apiRouter = express.Router();

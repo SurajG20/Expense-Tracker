@@ -1,4 +1,5 @@
 import { StatusCodes } from "http-status-codes";
+import config from "../config/config.js";
 
 function notFound(req, res, next) {
   res.status(StatusCodes.NOT_FOUND);
@@ -15,10 +16,7 @@ function errorHandler(err, req, res, next) {
   res.status(statusCode);
   res.json({
     message: err.message,
-    stack:
-      process.env.NODE_ENV === "production"
-        ? "Internal Server Error"
-        : err.stack,
+    stack: config.ISLIVE === 1 ? "Internal Server Error" : err.stack,
   });
 }
 

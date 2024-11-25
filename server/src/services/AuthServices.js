@@ -1,16 +1,17 @@
 import crypto from "crypto";
-import model from "../models/model.js";
-import config from "../config/config.js";
 import jwt from "jsonwebtoken";
+import config from "../config/config.js";
+import model from "../models/index.js";
 
-async function findUserByEmail(email) {
-  const user = await model.AuthModel.findOne({
-    where: { email },
-  });
-  return user;
+async function findUser(condition) {
+  return await model.UserModel.findOne(condition);
 }
 
-async function createToken(id, email) {
+async function createUser(data) {
+  return await model.UserModel.create(data);
+}
+
+async function createToken({ id, email, username }) {
   const t_id = crypto.randomBytes(40).toString("hex");
 
   await model.TokenModel.destroy({ where: { user_id: id } });
@@ -19,7 +20,9 @@ async function createToken(id, email) {
     user_id: id,
     client_id: "1",
     email: email,
+    username: username,
   });
+
   const token = jwt.sign({ jti: t_id }, config.PRIVATE_KEY, {
     algorithm: "RS256",
     expiresIn: "12h",
@@ -29,6 +32,7 @@ async function createToken(id, email) {
 }
 
 export default {
-  findUserByEmail,
+  findUser,
   createToken,
+  createUser,
 };
