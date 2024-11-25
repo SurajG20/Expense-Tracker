@@ -25,6 +25,14 @@ const UserModel = Model.define(
   },
   {
     timestamps: true,
+    indexes: [
+      {
+        fields: ["userID"],
+      },
+      {
+        fields: ["email"],
+      },
+    ],
   }
 );
 

@@ -8,14 +8,22 @@ const TokenModel = Model.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    user_id: Sequelize.STRING,
+    userId: Sequelize.STRING,
     expires_at: Sequelize.DATE,
-    client_id: Sequelize.STRING,
+    clientId: Sequelize.STRING,
     email: Sequelize.STRING,
     username: Sequelize.STRING,
   },
   {
     timestamps: true,
+    indexes: [
+      {
+        fields: ["userID"],
+      },
+      {
+        fields: ["email"],
+      },
+    ],
   }
 );
 

@@ -14,11 +14,11 @@ async function createUser(data) {
 async function createToken({ id, email, username }) {
   const t_id = crypto.randomBytes(40).toString("hex");
 
-  await model.TokenModel.destroy({ where: { user_id: id } });
+  await model.TokenModel.destroy({ where: { userId: id } });
   await model.TokenModel.create({
     id: t_id,
-    user_id: id,
-    client_id: "1",
+    userId: id,
+    clientId: "1",
     email: email,
     username: username,
   });
