@@ -6,7 +6,6 @@ import routes from "./routes/api.js";
 import logger from "./common/logger.js";
 
 import middlewares from "./middlewares/middlewares.js";
-import { RATE_LIMIT_OPTIONS, rateLimit } from "./common/rateLimiter.js";
 import config from "./config/config.js";
 const app = express();
 
@@ -18,8 +17,6 @@ app.use(cors());
 if (config.FILE_LOGGER == "true") {
   app.use(logger);
 }
-
-app.use(rateLimit(RATE_LIMIT_OPTIONS(10, 60)));
 
 app.use(middlewares.responseMiddleware);
 

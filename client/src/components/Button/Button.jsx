@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 function Button({ name, icon, onClick, bg, bPad, color, bRad, isLoading }) {
   return (
@@ -7,11 +7,11 @@ function Button({ name, icon, onClick, bg, bPad, color, bRad, isLoading }) {
         background: bg,
         padding: bPad,
         borderRadius: bRad,
-        color: color
+        color: color,
       }}
       disabled={isLoading}
       onClick={onClick}
-      type='submit'
+      type="submit"
     >
       {icon}
       {name}

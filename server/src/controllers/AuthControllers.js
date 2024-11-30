@@ -27,7 +27,7 @@ const Register = async (req, res) => {
       return res.success("User Registered Successfully", userCreated);
     });
   } catch (error) {
-    throw new Error("Error Registering User", error.message);
+    return res.error("Error Registering In User", error.message);
   }
 };
 
@@ -50,15 +50,12 @@ const Login = async (req, res) => {
     }
 
     const payload = {
-      id: user.id,
-      email: user.email,
-      username: user.username,
+      userID: user.userID,
     };
     const token = await AuthServices.createToken(payload);
     return res.success("User Logged In Successfully", { ...payload, token });
   } catch (error) {
-    console.log(error);
-    throw new Error("Error Logging In User");
+    return res.error("Error Logging In User", error.message);
   }
 };
 

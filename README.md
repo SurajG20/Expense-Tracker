@@ -51,3 +51,7 @@ User Model can have multiple income and expense model
 - [x] Socket setup with events
 - [x] Caching
 - [x] Cron jobs
+
+CLIENT
+
+1. Image uploading with firebase.

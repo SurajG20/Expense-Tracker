@@ -1,45 +1,50 @@
-// import JWT from "jsonwebtoken";
-// import fs from "fs";
+import JWT from "jsonwebtoken";
 
-// import { Token } from "./../Models/Token.js";
-// import { User } from "./../Models/User.js";
+import config from "../config/config.js";
+import AuthServices from "../services/AuthServices.js";
 
-// const PUBLIC_KEY = fs.readFileSync("./keys/public.key", "utf-8");
+const PUBLIC_KEY = config.PUBLIC_KEY;
 
-// export default async (req, res, next) => {
-//   var token = req.header("Authorization")?.split(" ")[1];
+const authenticate = async (req, res, next) => {
+  var token = req.header("Authorization")?.split(" ")[1];
 
-//   if (token == null) {
-//     return res.status(401).json(reply.unauth());
-//   }
+  if (token == null) {
+    return res.unauthorize("Token not found", null);
+  }
 
-//   const result = JWT.verify(
-//     token,
-//     PUBLIC_KEY,
-//     { algorithms: ["RS256"] },
-//     function (err, user) {
-//       if (err) {
-//         return 0;
-//       }
+  const result = JWT.verify(
+    token,
+    PUBLIC_KEY,
+    { algorithms: ["RS256"] },
+    function (err, user) {
+      if (err) {
+        return 0;
+      }
 
-//       return user;
-//     }
-//   );
+      return user;
+    }
+  );
 
-//   if (result == 0) {
-//     return res.status(401).json(reply.unauth());
-//   }
+  if (result == 0) {
+    return res.unauthorize("Invalid Token", null);
+  }
 
-//   var is_token = await Token.findByPk(result.jti);
-//   if (is_token == null) {
-//     return res.status(401).json(reply.unauth());
-//   }
+  var is_token = await AuthServices.findToken({
+    where: {
+      jti: result.jti,
+    },
+  });
+  if (is_token == null) {
+    return res.unauthorize("Invalid Token", null);
+  }
 
-//   var user = await User.findByPk(is_token.user_id);
-//   if (user == null) {
-//     return res.status(401).json(reply.unauth());
-//   }
+  var user = await AuthServices.findUser({ user_id: is_token.user_id });
+  if (user == null) {
+    return res.unauthorize("Invalid User", null);
+  }
 
-//   req.user = user;
-//   next();
-// };
+  req.user = user;
+  next();
+};
+
+export default { authenticate };

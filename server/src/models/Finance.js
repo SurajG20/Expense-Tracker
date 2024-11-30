@@ -10,6 +10,7 @@ const FinanceModel = Model.define(
     },
     title: {
       type: Sequelize.STRING,
+      unique: true,
       allowNull: false,
     },
     amount: {

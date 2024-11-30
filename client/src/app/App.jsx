@@ -1,21 +1,22 @@
-import Home from '../components/Home/Home';
-import { Route, Routes } from 'react-router-dom';
-import Login from '../components/Login/Login';
-import Register from '../components/Register/Register';
-import styled from 'styled-components';
-import PrivateRoutes from './PrivateRoutes';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Route, Routes } from "react-router-dom";
+import Home from "../components/Home/Home";
+import Login from "../components/Login/Login";
+import Register from "../components/Register/Register";
+import PrivateRoutes from "./PrivateRoutes";
+import styled from "styled-components";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
     <AppStyled>
       <ToastContainer autoClose={3000} />
       <Routes>
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route element={<PrivateRoutes />}>
-          <Route path='/' element={<Home />} />
+          <Route path="/" element={<Home />} />
         </Route>
       </Routes>
     </AppStyled>

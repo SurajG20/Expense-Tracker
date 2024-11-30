@@ -1,11 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const incomeSlice = createSlice({
-  name: 'income',
+  name: "income",
   initialState: {
     incomes: [],
     isFetching: false,
-    error: false
+    error: false,
   },
   reducers: {
     getIncomesStart: (state) => {
@@ -35,7 +35,6 @@ const incomeSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     },
-
     addIncomesStart: (state) => {
       state.isFetching = true;
       state.error = false;
@@ -47,8 +46,8 @@ const incomeSlice = createSlice({
     addIncomesFailure: (state) => {
       state.isFetching = false;
       state.error = true;
-    }
-  }
+    },
+  },
 });
 
 export const {

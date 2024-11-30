@@ -13,8 +13,8 @@ function errorHandler(err, req, res, next) {
     res.statusCode !== StatusCodes.OK
       ? res.statusCode
       : StatusCodes.INTERNAL_SERVER_ERROR;
-  res.status(statusCode);
-  res.json({
+  console.error(err); // Log the error
+  return res.status(statusCode).json({
     message: err.message,
     stack: config.ISLIVE === 1 ? "Internal Server Error" : err.stack,
   });
@@ -40,9 +40,20 @@ function error(res) {
   };
 }
 
+function unauthorize(res) {
+  return (message, data) => {
+    return res.status(StatusCodes.OK).json({
+      success: "unauthorize",
+      message: message,
+      result: data,
+    });
+  };
+}
+
 const responseMiddleware = (req, res, next) => {
   res.success = success(res);
   res.error = error(res);
+  res.unauthorize = unauthorize(res);
   next();
 };
 

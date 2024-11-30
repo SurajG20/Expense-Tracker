@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { MainLayout } from '../../styles/Layouts';
-import Navigation from '../Navigation/Navigation';
-import Dashboard from '../Dashboard/Dashboard';
-import Incomes from '../Income/Income';
-import Expenses from '../Expenses/Expenses';
-import { getIncomes } from '../../features/incomes/incomeActions';
-import { useDispatch } from 'react-redux';
-import { getExpense } from '../../features/expenses/expenseActions';
-import { getAuth } from '../../utils/requestMethods';
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+import { MainLayout } from "../../styles/Layouts";
+import Navigation from "../Navigation/Navigation";
+import Dashboard from "../Dashboard/Dashboard";
+import Incomes from "../Income/Income";
+import Expenses from "../Expenses/Expenses";
+import { getIncomes } from "../../features/incomes/incomeActions";
+import { useDispatch } from "react-redux";
+import { getExpense } from "../../features/expenses/expenseActions";
+import { getAuth } from "../../utils/requestMethods";
 
 function Home() {
   const dispatch = useDispatch();

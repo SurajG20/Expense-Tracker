@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import styled from 'styled-components';
-import Button from '../Button/Button';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
-import { useRegisterUserMutation } from '../../features/users/userSlice';
+import { useState } from "react";
+import styled from "styled-components";
+import Button from "../Button/Button";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useRegisterUserMutation } from "../../features/users/userSlice";
+
 function Register() {
   const [registerUser, { isLoading }] = useRegisterUserMutation();
   const [inputState, setInputState] = useState({
-    username: '',
-    password: '',
-    email: ''
+    username: "",
+    password: "",
+    email: "",
   });
 
   const navigate = useNavigate();
@@ -25,63 +25,68 @@ function Register() {
 
     try {
       await registerUser(inputState);
-      toast.success('Register successful!');
-      navigate('/login');
+      toast.success("Register successful!");
+      navigate("/login");
       setInputState({
-        email: '',
-        password: '',
-        username: ''
+        email: "",
+        password: "",
+        username: "",
       });
     } catch (err) {
-      console.error('Registration failed', err);
       if (err?.data?.message) {
         toast.error(err.data.message);
       } else {
-        toast.error('Invalid Credentials');
+        toast.error("Invalid Credentials");
       }
     }
   };
 
   return (
     <MainContainer>
-      <div className='form-content'>
+      <div className="form-content">
         <FormStyled onSubmit={handleSubmit}>
           <h2>Register</h2>
-          <div className='input-control'>
+          <div className="input-control">
             <input
-              type='text'
+              type="text"
               value={username}
-              name={'username'}
-              placeholder='Username'
-              onChange={handleInput('username')}
+              name={"username"}
+              placeholder="Username"
+              onChange={handleInput("username")}
             />
           </div>
-          <div className='input-control'>
+          <div className="input-control">
             <input
               value={password}
-              type='password'
-              name={'password'}
-              placeholder={'Password'}
-              onChange={handleInput('password')}
+              type="password"
+              name={"password"}
+              placeholder={"Password"}
+              onChange={handleInput("password")}
             />
           </div>
-          <div className='input-control'>
-            <input value={email} type='text' name={'email'} placeholder={'Email'} onChange={handleInput('email')} />
+          <div className="input-control">
+            <input
+              value={email}
+              type="text"
+              name={"email"}
+              placeholder={"Email"}
+              onChange={handleInput("email")}
+            />
           </div>
 
-          <div className='submit-btn'>
+          <div className="submit-btn">
             <Button
-              name={'Register'}
-              bPad={'.5rem 2rem'}
-              bRad={'10px'}
-              bg={'var(--color-accent'}
+              name={"Register"}
+              bPad={".5rem 2rem"}
+              bRad={"10px"}
+              bg={"var(--color-accent"}
               isLoading={isLoading}
-              color={'#fff'}
+              color={"#fff"}
             />
           </div>
           <p>
             Already Have an account ?,
-            <Link to='/login'>Login</Link>
+            <Link to="/login">Login</Link>
           </p>
         </FormStyled>
       </div>

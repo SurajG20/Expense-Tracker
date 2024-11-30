@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import { HamburgerIcon, signout } from '../../utils/Icons';
-import { menuItems } from '../../utils/menuItems';
-import Button from '../Button/Button';
-import { useNavigate } from 'react-router-dom';
-import { clearAuth, getAuth } from '../../utils/requestMethods';
-import { useState } from 'react';
+import styled from "styled-components";
+import { HamburgerIcon, signout } from "../../utils/Icons";
+import { menuItems } from "../../utils/menuItems";
+import Button from "../Button/Button";
+import { useNavigate } from "react-router-dom";
+import { clearAuth, getAuth } from "../../utils/requestMethods";
+import { useState } from "react";
 
 function Navigation({ active, setActive }) {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ function Navigation({ active, setActive }) {
 
   const handleInput = () => {
     clearAuth();
-    navigate('/login');
+    navigate("/login");
   };
 
   const toggleMenu = () => {
@@ -23,12 +23,12 @@ function Navigation({ active, setActive }) {
   return (
     <>
       <NavStyled isOpen={isOpen}>
-        <div className='user-con'>
-          <div className='text'>
+        <div className="user-con">
+          <div className="text">
             <h2>{user?.username}</h2>
           </div>
         </div>
-        <ul className='menu-items'>
+        <ul className="menu-items">
           {menuItems.map((item) => (
             <li
               key={item.id}
@@ -36,34 +36,34 @@ function Navigation({ active, setActive }) {
                 setActive(item.id);
                 setIsOpen(!isOpen);
               }}
-              className={active === item.id ? 'active' : ''}
+              className={active === item.id ? "active" : ""}
             >
               {item.icon}
               <span>{item.title}</span>
             </li>
           ))}
         </ul>
-        <div className='bottom-nav'>
+        <div className="bottom-nav">
           <Button
             onClick={handleInput}
-            name={'Sign Out'}
+            name={"Sign Out"}
             icon={signout}
-            bPad={'.3rem .6rem'}
-            bRad={'20px'}
-            bg={'var(--color-gray'}
-            color={'lightcoral'}
+            bPad={".3rem .6rem"}
+            bRad={"20px"}
+            bg={"var(--color-gray"}
+            color={"lightcoral"}
           />
         </div>
       </NavStyled>
       <Hamburger>
         <Button
           onClick={toggleMenu}
-          bPad={'.3rem .6rem'}
-          bRad={'20px'}
-          bg={'var(--color-gray'}
-          color={'#222260'}
+          bPad={".3rem .6rem"}
+          bRad={"20px"}
+          bg={"var(--color-gray"}
+          color={"#222260"}
           icon={HamburgerIcon}
-        ></Button>
+        />
       </Hamburger>
     </>
   );
@@ -84,7 +84,7 @@ const NavStyled = styled.nav`
 
   @media (max-width: 768px) {
     position: fixed;
-    left: ${(props) => (props.isOpen ? '0' : '-100%')};
+    left: ${(props) => (props.isOpen ? "0" : "-100%")};
     top: 0;
     height: 100vh;
     z-index: 20;
@@ -170,7 +170,7 @@ const NavStyled = styled.nav`
       color: rgba(34, 34, 96, 1) !important;
     }
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       left: 0;
       top: 0;
