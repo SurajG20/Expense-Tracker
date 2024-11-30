@@ -1,32 +1,4 @@
-<!-- Server update to mySql -->
-
-Register
-username,email and password
-
-Login
-Email, password - jwt autheticate
-
-Income and expense
-IncomeExpenseModel
-title - string,char255
-amount - string
-type - Income, expense
-date
-category - string, trim
-description - description of our payment
-userId - from user model
-timestamps
-
-router
-.post('/register', Register)
-.post('/login', Login)
-.post('/logout', Logout);
-
-crud routes for updating incomeexpense model
-
-User Model can have multiple income and expense model
-
-<!-- Features -->
+<-- Features -->
 
 ## TODO
 
@@ -44,7 +16,7 @@ User Model can have multiple income and expense model
   - Custom validation like unique and exists. Remaining
 - [Y] App container
 - [Y] ESLint integrated
-- [x] Token with RSA encryption using private and public key
+- [y] Token with RSA encryption using private and public key
   - [JS Encrypt Demo](https://travistidwell.com/jsencrypt/demo/)
 - [x] Nodemailer with configuration
 - [x] Sentry for error handling in production
@@ -55,3 +27,4 @@ User Model can have multiple income and expense model
 CLIENT
 
 1. Image uploading with firebase.
+2. Convert to ShadCN ui, and use tailwind in the project.
