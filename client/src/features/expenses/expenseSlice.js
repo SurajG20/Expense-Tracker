@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const expenseSlice = createSlice({
-  name: 'expenses',
+  name: "expenses",
   initialState: {
     expenses: [],
     isFetching: false,
@@ -26,7 +26,9 @@ const expenseSlice = createSlice({
     },
     deleteExpensesSuccess: (state, action) => {
       state.isFetching = false;
-      const index = state.expenses.findIndex((i) => i._id === action.payload.id);
+      const index = state.expenses.findIndex(
+        (i) => i._id === action.payload.id
+      );
       if (index !== -1) {
         state.expenses.splice(index, 1);
       }

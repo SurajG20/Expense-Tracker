@@ -1,34 +1,37 @@
-import styled from 'styled-components';
-import { InnerLayout } from '../../styles/Layouts';
-import Form from './IncomeForm';
-import IncomeItem from './IncomeItem';
-import { useSelector } from 'react-redux';
-import { calculateTotalIncome } from '../../features/utilities/totalUtilities';
+import styled from "styled-components";
+import { InnerLayout } from "../../styles/Layouts";
+import Form from "./IncomeForm";
+import IncomeItem from "./IncomeItem";
+import { useSelector } from "react-redux";
+import { calculateTotalIncome } from "../../features/utilities/totalUtilities";
 function Income() {
   const incomes = useSelector((state) => state.incomes.incomes);
 
   return (
     <IncomeStyled>
-      <InnerLayout style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <InnerLayout
+        style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+      >
         <h1>Incomes</h1>
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <h2 className='total-income'>
+          <h2 className="total-income">
             Total Income: <span>₹{calculateTotalIncome(incomes)}</span>
           </h2>
         </div>
-        <div className='income-content'>
-          <div className='form-container'>
+        <div className="income-content">
+          <div className="form-container">
             <Form />
           </div>
-          <div className='incomes'>
+          <div className="incomes">
             {incomes.map((income) => {
-              const { _id, title, amount, date, category, description, type } = income;
+              const { _id, title, amount, date, category, description, type } =
+                income;
               return (
                 <IncomeItem
                   key={income._id}
@@ -39,7 +42,7 @@ function Income() {
                   date={date}
                   type={type}
                   category={category}
-                  indicatorColor='var(--color-green)'
+                  indicatorColor="var(--color-green)"
                 />
               );
             })}

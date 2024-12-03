@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { dateFormat } from '../../utils/dateFormat';
+import styled from "styled-components";
+import { dateFormat } from "../../utils/dateFormat";
 import {
   bitcoin,
   book,
@@ -19,58 +19,67 @@ import {
   trash,
   tv,
   users,
-  yt
-} from '../../utils/Icons';
-import Button from '../Button/Button';
-import { useDispatch } from 'react-redux';
-import { deleteIncome, getIncomes } from '../../features/incomes/incomeActions';
-import { toast } from 'react-toastify';
+  yt,
+} from "../../utils/Icons";
+import Button from "../Button/Button";
+import { useDispatch } from "react-redux";
+import { deleteIncome, getIncomes } from "../../features/incomes/incomeActions";
+import { toast } from "react-toastify";
 
-function IncomeItem({ id, title, amount, date, category, description, indicatorColor, type }) {
+function IncomeItem({
+  id,
+  title,
+  amount,
+  date,
+  category,
+  description,
+  indicatorColor,
+  type,
+}) {
   const dispatch = useDispatch();
   const categoryIcon = () => {
     switch (category) {
-      case 'salary':
+      case "salary":
         return money;
-      case 'freelancing':
+      case "freelancing":
         return freelance;
-      case 'investments':
+      case "investments":
         return stocks;
-      case 'stocks':
+      case "stocks":
         return users;
-      case 'bitcoin':
+      case "bitcoin":
         return bitcoin;
-      case 'bank':
+      case "bank":
         return card;
-      case 'youtube':
+      case "youtube":
         return yt;
-      case 'other':
+      case "other":
         return piggy;
       default:
-        return 'money';
+        return "money";
     }
   };
 
   const expenseCatIcon = () => {
     switch (category) {
-      case 'education':
+      case "education":
         return book;
-      case 'groceries':
+      case "groceries":
         return food;
-      case 'health':
+      case "health":
         return medical;
-      case 'subscriptions':
+      case "subscriptions":
         return tv;
-      case 'takeaways':
+      case "takeaways":
         return takeaway;
-      case 'clothing':
+      case "clothing":
         return clothing;
-      case 'travelling':
+      case "travelling":
         return freelance;
-      case 'other':
+      case "other":
         return circle;
       default:
-        return '';
+        return "";
     }
   };
 
@@ -81,18 +90,20 @@ function IncomeItem({ id, title, amount, date, category, description, indicatorC
       })
       .catch((error) => {
         console.log(error);
-        toast.error('Failed to delete income.');
+        toast.error("Failed to delete income.");
       });
-      toast.success('Income deleted successfully');
+    toast.success("Income deleted successfully");
   };
 
   return (
     <IncomeItemStyled $indicator={indicatorColor}>
-      <div className='icon'>{type === 'expense' ? expenseCatIcon() : categoryIcon()}</div>
-      <div className='content'>
+      <div className="icon">
+        {type === "expense" ? expenseCatIcon() : categoryIcon()}
+      </div>
+      <div className="content">
         <h5>{title}</h5>
-        <div className='inner-content'>
-          <div className='text'>
+        <div className="inner-content">
+          <div className="text">
             <p>
               {dollar} {amount}
             </p>
@@ -104,14 +115,14 @@ function IncomeItem({ id, title, amount, date, category, description, indicatorC
               {description}
             </p>
           </div>
-          <div className='btn-con'>
+          <div className="btn-con">
             <Button
               icon={trash}
-              bPad={'0.3rem'}
-              bRad={'50%'}
-              color={'var(--primary-color'}
-              iColor={'#fff'}
-              hColor={'var(--color-green)'}
+              bPad={"0.3rem"}
+              bRad={"50%"}
+              color={"var(--primary-color"}
+              iColor={"#fff"}
+              hColor={"var(--color-green)"}
               onClick={handleDelete}
             />
           </div>
@@ -175,7 +186,7 @@ const IncomeItemStyled = styled.div`
         padding-left: 1.5rem;
       }
       &::before {
-        content: '';
+        content: "";
         position: absolute;
         left: 0;
         top: 50%;

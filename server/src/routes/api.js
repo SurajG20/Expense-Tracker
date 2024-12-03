@@ -8,11 +8,6 @@ import Middleware from "../middlewares/authentication.js";
 const apiRouter = express.Router();
 
 apiRouter.use("/v1/auth", rateLimit(RATE_LIMIT_OPTIONS(1, 5)), authRoutes);
-apiRouter.use(
-  "/v1/finance",
-  rateLimit(RATE_LIMIT_OPTIONS(1, 5)),
-  Middleware.authenticate,
-  financeRoutes
-);
+apiRouter.use("/v1/finance", Middleware.authenticate, financeRoutes);
 
 export default apiRouter;

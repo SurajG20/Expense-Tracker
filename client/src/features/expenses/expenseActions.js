@@ -1,4 +1,4 @@
-import { userRequest } from '../../utils/requestMethods';
+import { userRequest } from "../../utils/requestMethods";
 import {
   getExpensesStart,
   getExpensesSuccess,
@@ -8,19 +8,16 @@ import {
   deleteExpensesSuccess,
   addExpensesStart,
   addExpensesSuccess,
-  addExpensesFailure
-} from './expenseSlice';
+  addExpensesFailure,
+} from "./expenseSlice";
 
 export const getExpense = async (dispatch) => {
   dispatch(getExpensesStart());
   try {
-    const res = await userRequest.get('/get-expenses');
-    const expenses = res.data.map((expense) => ({
-      ...expense,
-      date: new Date(expense.date).toISOString()
-    }));
-
-    dispatch(getExpensesSuccess(expenses));
+    const res = await userRequest.get("/finance?type=expense");
+    if (res.data.success) {
+      dispatch(getExpensesSuccess(res.data.result));
+    }
   } catch (error) {
     dispatch(getExpensesFailure());
   }
@@ -29,7 +26,7 @@ export const getExpense = async (dispatch) => {
 export const deleteExpense = async (dispatch, id) => {
   dispatch(deleteExpensesStart());
   try {
-    await userRequest.delete('/delete-expense/' + id);
+    await userRequest.delete("/delete-expense/" + id);
     dispatch(deleteExpensesSuccess({ id }));
   } catch (error) {
     dispatch(deleteExpensesFailure());
@@ -41,9 +38,9 @@ export const addExpense = async (dispatch, data) => {
   try {
     const formattedData = {
       ...data,
-      date: new Date(data.date).toISOString()
+      date: new Date(data.date).toISOString(),
     };
-    const Response = await userRequest.post('/add-expense/', formattedData);
+    const Response = await userRequest.post("/add-expense/", formattedData);
     dispatch(addExpensesSuccess(Response.data));
   } catch (error) {
     dispatch(addExpensesFailure());

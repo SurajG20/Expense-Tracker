@@ -13,6 +13,38 @@ function Dashboard() {
   const incomes = useSelector((state) => state.incomes.incomes);
   const expenses = useSelector((state) => state.expenses.expenses);
 
+  const minIncome = incomes.length
+    ? Math.min(...incomes.map((item) => item.amount))
+    : 0;
+  const maxIncome = incomes.length
+    ? Math.max(...incomes.map((item) => item.amount))
+    : 0;
+  const minExpense = expenses.length
+    ? Math.min(...expenses.map((item) => item.amount))
+    : 0;
+  const maxExpense = expenses.length
+    ? Math.max(...expenses.map((item) => item.amount))
+    : 0;
+
+  const StatBox = ({ title, amount, className }) => (
+    <div className={className}>
+      <h2>{title}</h2>
+      <p>₹ {amount}</p>
+    </div>
+  );
+
+  const MinMaxDisplay = ({ title, min, max }) => (
+    <>
+      <h2 className="salary-title">
+        Min <span>{title}</span>Max
+      </h2>
+      <div className="salary-item">
+        <p>₹{min}</p>
+        <p>₹{max}</p>
+      </div>
+    </>
+  );
+
   return (
     <DashboardStyled>
       <InnerLayout>
@@ -20,37 +52,32 @@ function Dashboard() {
           <div className="chart-con">
             <Chart />
             <div className="amount-con">
-              <div className="income">
-                <h2>Total Income</h2>
-                <p>₹ {calculateTotalIncome(incomes)}</p>
-              </div>
-              <div className="expense">
-                <h2>Total Expense</h2>
-                <p>₹ {calculateTotalExpenses(expenses)}</p>
-              </div>
-              <div className="balance">
-                <h2>Total Balance</h2>
-                <p>₹ {calculateTotalBalance(incomes, expenses)}</p>
-              </div>
+              <StatBox
+                title="Total Income"
+                amount={calculateTotalIncome(incomes)}
+                className="income"
+              />
+              <StatBox
+                title="Total Expense"
+                amount={calculateTotalExpenses(expenses)}
+                className="expense"
+              />
+              <StatBox
+                title="Total Balance"
+                amount={calculateTotalBalance(incomes, expenses)}
+                className="balance"
+              />
             </div>
           </div>
           <div className="history-con">
             <History />
             <div className="salary-container">
-              <h2 className="salary-title">
-                Min <span>Salary</span>Max
-              </h2>
-              <div className="salary-item">
-                <p>₹{Math.min(...incomes.map((item) => item.amount))}</p>
-                <p>₹{Math.max(...incomes.map((item) => item.amount))}</p>
-              </div>
-              <h2 className="salary-title">
-                Min <span>Expense</span>Max
-              </h2>
-              <div className="salary-item">
-                <p>₹{Math.min(...expenses.map((item) => item.amount))}</p>
-                <p>₹{Math.max(...expenses.map((item) => item.amount))}</p>
-              </div>
+              <MinMaxDisplay title="Salary" min={minIncome} max={maxIncome} />
+              <MinMaxDisplay
+                title="Expense"
+                min={minExpense}
+                max={maxExpense}
+              />
             </div>
           </div>
         </div>
@@ -98,6 +125,11 @@ const DashboardStyled = styled.div`
           display: flex;
           flex-direction: column;
           gap: 1rem;
+          transition: transform 0.2s ease;
+
+          &:hover {
+            transform: translateY(-2px);
+          }
 
           @media (max-width: 768px) {
             padding: 0.8rem;
@@ -128,6 +160,7 @@ const DashboardStyled = styled.div`
       display: flex;
       flex-direction: column;
       gap: 2rem;
+
       .salary-container {
         display: flex;
         flex-direction: column;
@@ -152,6 +185,8 @@ const DashboardStyled = styled.div`
 
           span {
             font-size: 1.2rem;
+            color: var(--primary-color, #222260);
+            font-weight: 600;
 
             @media (max-width: 768px) {
               font-size: 1.1rem;
@@ -168,6 +203,11 @@ const DashboardStyled = styled.div`
           display: flex;
           justify-content: space-between;
           align-items: center;
+          transition: transform 0.2s ease;
+
+          &:hover {
+            transform: translateY(-2px);
+          }
 
           @media (max-width: 768px) {
             padding: 0.6rem;

@@ -15,12 +15,10 @@ import {
 export const getIncomes = async (dispatch) => {
   dispatch(getIncomesStart());
   try {
-    const res = await userRequest.get("/get-incomes");
-    const incomes = res.data.map((income) => ({
-      ...income,
-      date: new Date(income.date).toISOString(),
-    }));
-    dispatch(getIncomesSuccess(incomes));
+    const res = await userRequest.get("/finance?type=income");
+    if (res.data.success) {
+      dispatch(getIncomesSuccess(res.data.result));
+    }
   } catch (error) {
     dispatch(getIncomesFailure());
   }
