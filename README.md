@@ -28,3 +28,6 @@ CLIENT
 
 1. Image uploading with firebase.
 2. Convert to ShadCN ui, and use tailwind in the project.
+3. Add Email and Password reset functionality.
+4. Add forgot password functionality.
+5. Add email verification functionality.

@@ -45,48 +45,64 @@ function Register() {
     <MainContainer>
       <div className="form-content">
         <FormStyled onSubmit={handleSubmit}>
-          <h2>Register</h2>
+          <h1>Create Account</h1>
+          <p className="subtitle">Please fill in your details to register</p>
+
           <div className="input-control">
+            <label htmlFor="username">Username</label>
             <input
               type="text"
               value={username}
+              id="username"
               name={"username"}
-              placeholder="Username"
+              autoComplete="username"
+              placeholder="Enter your username"
               onChange={handleInput("username")}
+              required
             />
           </div>
+
           <div className="input-control">
+            <label htmlFor="email">Email</label>
             <input
+              type="email"
+              value={email}
+              id="email"
+              name={"email"}
+              autoComplete="email"
+              placeholder="Enter your email"
+              onChange={handleInput("email")}
+              required
+            />
+          </div>
+
+          <div className="input-control">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
               value={password}
               type="password"
               name={"password"}
-              placeholder={"Password"}
+              autoComplete="new-password"
+              placeholder={"Enter your password"}
               onChange={handleInput("password")}
-            />
-          </div>
-          <div className="input-control">
-            <input
-              value={email}
-              type="text"
-              name={"email"}
-              placeholder={"Email"}
-              onChange={handleInput("email")}
+              required
             />
           </div>
 
           <div className="submit-btn">
             <Button
-              name={"Register"}
-              bPad={".5rem 2rem"}
-              bRad={"10px"}
-              bg={"var(--color-accent"}
-              isLoading={isLoading}
+              name={isLoading ? "Creating account..." : "Create Account"}
+              bPad={".8rem 2rem"}
+              bRad={"30px"}
+              bg={"var(--color-accent)"}
               color={"#fff"}
+              disabled={isLoading}
             />
           </div>
-          <p>
-            Already Have an account ?,
-            <Link to="/login">Login</Link>
+
+          <p className="register-link">
+            Already have an account? <Link to="/login">Sign in</Link>
           </p>
         </FormStyled>
       </div>
@@ -100,51 +116,107 @@ const MainContainer = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  background: linear-gradient(120deg, #f6f8fa 0%, #f0f4f7 100%);
+
   .form-content {
-    box-shadow:
-      rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    padding: 3rem 2.5rem;
-    background-color: #edf1f3;
-    border-radius: 10px;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 3.5rem 3rem;
+    background-color: white;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 420px;
+    margin: 1rem;
   }
 `;
 
 const FormStyled = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 1rem;
-  h2 {
-    font-size: 2rem;
+  gap: 1.5rem;
+
+  h1 {
+    font-size: 2.2rem;
     color: var(--color-accent);
-  }
-  input {
-    font-size: 1rem;
-    outline: none;
-    border: none;
-    padding: 0.8rem 0.5rem;
-    border-radius: 5px;
-    border: 2px solid #898a9b;
-    width: 100%;
+    margin-bottom: 0;
+    text-align: center;
   }
 
-  .submit-btn {
-    button {
-      box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
-      &:hover {
-        background: var(--color-green) !important;
+  .subtitle {
+    text-align: center;
+    color: #666;
+    margin-top: -0.5rem;
+    font-size: 1rem;
+  }
+
+  .input-control {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      font-weight: 500;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    input {
+      font-size: 1rem;
+      outline: none;
+      border: 1.5px solid #e0e0e0;
+      padding: 1rem;
+      border-radius: 8px;
+      width: 100%;
+      transition: all 0.2s ease;
+
+      &:focus {
+        border-color: var(--color-accent);
+        box-shadow: 0 0 0 2px rgba(var(--color-accent-rgb), 0.1);
+      }
+
+      &::placeholder {
+        color: #aaa;
       }
     }
   }
-  p {
-    font-size: small;
+
+  .submit-btn {
+    margin-top: 0.5rem;
+
+    button {
+      width: 100%;
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: all 0.2s ease;
+
+      &:hover:not(:disabled) {
+        background: var(--color-green) !important;
+        transform: translateY(-1px);
+      }
+
+      &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .register-link {
+    text-align: center;
+    font-size: 0.95rem;
+    color: #666;
+    margin-top: 0.5rem;
+
     a {
-      font-weight: bold;
-      cursor: pointer;
-      color: darkblue;
+      font-weight: 600;
+      color: var(--color-accent);
+      text-decoration: none;
+      margin-left: 0.3rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 `;
+
 export default Register;
