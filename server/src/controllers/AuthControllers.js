@@ -51,6 +51,8 @@ const Login = async (req, res) => {
 
     const payload = {
       userID: user.userID,
+      email: user.email,
+      username: user.username,
     };
     const token = await AuthServices.createToken(payload);
     return res.success("User Logged In Successfully", { ...payload, token });

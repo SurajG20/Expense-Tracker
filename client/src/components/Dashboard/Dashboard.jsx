@@ -1,13 +1,13 @@
-import styled from 'styled-components';
-import History from './History';
-import { InnerLayout } from '../../styles/Layouts';
-import Chart from './Chart';
-import { useSelector } from 'react-redux';
+import styled from "styled-components";
+import History from "./History";
+import { InnerLayout } from "../../styles/Layouts";
+import Chart from "./Chart";
+import { useSelector } from "react-redux";
 import {
   calculateTotalBalance,
   calculateTotalIncome,
-  calculateTotalExpenses
-} from '../../features/utilities/totalUtilities';
+  calculateTotalExpenses,
+} from "../../features/utilities/totalUtilities";
 
 function Dashboard() {
   const incomes = useSelector((state) => state.incomes.incomes);
@@ -16,38 +16,38 @@ function Dashboard() {
   return (
     <DashboardStyled>
       <InnerLayout>
-        <div className='stats-con'>
-          <div className='chart-con'>
+        <div className="stats-con">
+          <div className="chart-con">
             <Chart />
-            <div className='amount-con'>
-              <div className='income'>
+            <div className="amount-con">
+              <div className="income">
                 <h2>Total Income</h2>
                 <p>₹ {calculateTotalIncome(incomes)}</p>
               </div>
-              <div className='expense'>
+              <div className="expense">
                 <h2>Total Expense</h2>
                 <p>₹ {calculateTotalExpenses(expenses)}</p>
               </div>
-              <div className='balance'>
+              <div className="balance">
                 <h2>Total Balance</h2>
                 <p>₹ {calculateTotalBalance(incomes, expenses)}</p>
               </div>
             </div>
           </div>
-          <div className='history-con'>
+          <div className="history-con">
             <History />
-            <div className='salary-container'>
-              <h2 className='salary-title'>
+            <div className="salary-container">
+              <h2 className="salary-title">
                 Min <span>Salary</span>Max
               </h2>
-              <div className='salary-item'>
+              <div className="salary-item">
                 <p>₹{Math.min(...incomes.map((item) => item.amount))}</p>
                 <p>₹{Math.max(...incomes.map((item) => item.amount))}</p>
               </div>
-              <h2 className='salary-title'>
+              <h2 className="salary-title">
                 Min <span>Expense</span>Max
               </h2>
-              <div className='salary-item'>
+              <div className="salary-item">
                 <p>₹{Math.min(...expenses.map((item) => item.amount))}</p>
                 <p>₹{Math.max(...expenses.map((item) => item.amount))}</p>
               </div>

@@ -25,7 +25,9 @@ function Login() {
 
     try {
       const data = await loginUser(inputState).unwrap();
-      setAuth(data);
+      console.log(data.result);
+
+      setAuth(data.result);
       toast.success("Login successful!");
       navigate("/");
       setInputState({

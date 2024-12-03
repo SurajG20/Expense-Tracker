@@ -4,15 +4,24 @@ import { menuItems } from "../../utils/menuItems";
 import Button from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 import { clearAuth, getAuth } from "../../utils/requestMethods";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Navigation({ active, setActive }) {
   const navigate = useNavigate();
-  const user = getAuth();
+  const [user, setUser] = useState(getAuth());
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleInput = () => {
+  useEffect(() => {
+    const currentUser = getAuth();
+    if (!currentUser) {
+      navigate("/login");
+    }
+    setUser(currentUser);
+  }, [navigate]);
+
+  const handleSignOut = () => {
     clearAuth();
+    setUser(null);
     navigate("/login");
   };
 
@@ -20,22 +29,36 @@ function Navigation({ active, setActive }) {
     setIsOpen(!isOpen);
   };
 
+  const handleMenuClick = (id) => {
+    setActive(id);
+    setIsOpen(false);
+  };
+
+  if (!user) return null;
+
   return (
     <>
       <NavStyled isOpen={isOpen}>
-        <div className="user-con">
-          <div className="text">
-            <h2>{user?.username}</h2>
+        <UserProfile>
+          <div className="avatar">
+            <img
+              src={`https://ui-avatars.com/api/?name=${
+                user?.username || user?.email
+              }&background=random&bold=true&size=128`}
+              alt="User avatar"
+              className="avatar-img"
+            />
           </div>
-        </div>
+          <div className="user-info">
+            <h2>{user?.username || user?.email}</h2>
+            <p>{user?.email}</p>
+          </div>
+        </UserProfile>
         <ul className="menu-items">
           {menuItems.map((item) => (
             <li
               key={item.id}
-              onClick={() => {
-                setActive(item.id);
-                setIsOpen(!isOpen);
-              }}
+              onClick={() => handleMenuClick(item.id)}
               className={active === item.id ? "active" : ""}
             >
               {item.icon}
@@ -45,11 +68,11 @@ function Navigation({ active, setActive }) {
         </ul>
         <div className="bottom-nav">
           <Button
-            onClick={handleInput}
+            onClick={handleSignOut}
             name={"Sign Out"}
             icon={signout}
-            bPad={".3rem .6rem"}
-            bRad={"20px"}
+            bPad={".8rem 1.6rem"}
+            bRad={"30px"}
             bg={"var(--color-gray"}
             color={"lightcoral"}
           />
@@ -93,44 +116,6 @@ const NavStyled = styled.nav`
     width: 240px;
   }
 
-  .user-con {
-    height: 100px;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    .text {
-      border: 2px solid white;
-      padding: 0.5rem 1rem;
-      border-radius: 10px;
-      box-shadow: 0px 1px 17px rgba(0, 0, 0, 0.06);
-    }
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-      background: #fcf6f9;
-      border: 2px solid #ffffff;
-      padding: 0.2rem;
-      box-shadow: 0px 1px 17px rgba(0, 0, 0, 0.06);
-    }
-    h2 {
-      font-size: 1.7rem;
-      text-transform: capitalize;
-      color: rgba(34, 34, 96, 1);
-      @media (max-width: 768px) {
-        font-size: 1.2rem;
-      }
-    }
-    p {
-      font-size: medium;
-      color: rgba(34, 34, 96, 0.6);
-      @media (max-width: 768px) {
-        font-size: 0.9rem;
-      }
-    }
-  }
-
   .menu-items {
     flex: 1;
     display: flex;
@@ -140,12 +125,18 @@ const NavStyled = styled.nav`
       grid-template-columns: 40px auto;
       align-items: center;
       margin: 1rem 0;
-      font-weight: 400;
+      font-weight: 500;
       cursor: pointer;
-      transition: all 0.4s ease-in-out;
+      transition: all 0.3s ease;
       color: rgba(34, 34, 96, 0.6);
-      padding-left: 1rem;
-      position: relative;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+
+      &:hover {
+        color: rgba(34, 34, 96, 0.9);
+        background: rgba(34, 34, 96, 0.05);
+      }
+
       span {
         font-size: 1.1rem;
         @media (max-width: 768px) {
@@ -155,17 +146,20 @@ const NavStyled = styled.nav`
       i {
         color: rgba(34, 34, 96, 0.6);
         font-size: 1.1rem;
-        transition: all 0.4s ease-in-out;
+        transition: all 0.3s ease;
       }
     }
   }
 
   .bottom-nav {
-    font-size: medium;
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
   }
 
   .active {
     color: rgba(34, 34, 96, 1) !important;
+    background: rgba(34, 34, 96, 0.08);
     i {
       color: rgba(34, 34, 96, 1) !important;
     }
@@ -178,6 +172,56 @@ const NavStyled = styled.nav`
       height: 100%;
       background: #222260;
       border-radius: 0 10px 10px 0;
+    }
+  }
+`;
+
+const UserProfile = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .user-info {
+    text-align: center;
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: rgba(34, 34, 96, 0.9);
+      margin-bottom: 0.3rem;
+
+      @media (max-width: 768px) {
+        font-size: 1.2rem;
+      }
+    }
+
+    p {
+      font-size: 0.9rem;
+      color: rgba(34, 34, 96, 0.6);
+
+      @media (max-width: 768px) {
+        font-size: 0.8rem;
+      }
     }
   }
 `;
