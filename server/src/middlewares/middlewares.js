@@ -50,10 +50,21 @@ function unauthorize(res) {
   };
 }
 
+function invalid(res) {
+  return (message, data) => {
+    return res.status(StatusCodes.OK).json({
+      success: "invalid",
+      message: message,
+      result: data,
+    });
+  };
+}
+
 const responseMiddleware = (req, res, next) => {
   res.success = success(res);
   res.error = error(res);
   res.unauthorize = unauthorize(res);
+  res.invalid = invalid(res);
   next();
 };
 

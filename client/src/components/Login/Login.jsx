@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Button from "../Button/Button";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLoginUserMutation } from "../../features/users/userSlice";
 import { toast } from "react-toastify";
 import { setAuth } from "../../utils/requestMethods";
@@ -23,10 +23,13 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const data = await loginUser(inputState).unwrap();
-      console.log(data.result);
-
+    const data = await loginUser(inputState).unwrap();
+    if (data.success == "invalid") {
+      const errors = data.result;
+      return toast.error(errors?.[0].message);
+    } else if (data.success == "false") {
+      return toast.error(data.message);
+    } else {
       setAuth(data.result);
       toast.success("Login successful!");
       navigate("/");
@@ -34,13 +37,6 @@ function Login() {
         email: "",
         password: "",
       });
-    } catch (err) {
-      console.error("Login failed", err);
-      if (err?.data?.message) {
-        toast.error(err.data.message);
-      } else {
-        toast.error("Invalid Credentials");
-      }
     }
   };
 

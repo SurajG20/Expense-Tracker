@@ -1,42 +1,85 @@
 import { useState } from "react";
+import { z } from "zod";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Button from "../Button/Button";
 import { plus } from "../../utils/Icons";
-import { addIncome } from "../../features/incomes/incomeActions";
+import { addIncome } from "../../features/incomes/incomeSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+
+const incomeSchema = z.object({
+  title: z
+    .string()
+    .min(3, "Title must be at least 3 characters long")
+    .max(255, "Title must be at most 255 characters"),
+  amount: z.number().positive("Amount must be a positive number"),
+  date: z.date(),
+  category: z
+    .string()
+    .min(3, "Category must be at least 3 characters long")
+    .max(255, "Category must be at most 255 characters"),
+  description: z
+    .string()
+    .max(500, "Description must be at most 500 characters")
+    .optional(),
+  type: z.literal("income"),
+});
+
 function Form() {
   const dispatch = useDispatch();
 
   const [inputState, setInputState] = useState({
     title: "",
     amount: "",
-    date: "",
+    date: new Date(),
     category: "",
     description: "",
+    type: "income",
   });
 
   const { title, amount, date, category, description } = inputState;
 
   const handleInput = (name) => (e) => {
-    setInputState({ ...inputState, [name]: e.target.value });
+    const value =
+      name === "amount"
+        ? e.target.value === ""
+          ? ""
+          : parseFloat(e.target.value)
+        : e.target.value;
+
+    setInputState({ ...inputState, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      addIncome(dispatch, inputState);
+      const validatedData = incomeSchema.parse({
+        title,
+        amount: parseFloat(amount),
+        date,
+        category,
+        description,
+        type: "income",
+      });
+
+      await dispatch(addIncome(validatedData)).unwrap();
       setInputState({
         title: "",
         amount: "",
-        date: "",
+        date: new Date(),
         category: "",
         description: "",
+        type: "income",
       });
     } catch (error) {
-      toast.error("Failed to add income");
+      if (error instanceof z.ZodError) {
+        error.errors.forEach((err) => {
+          toast.error(err.message);
+        });
+      }
     }
   };
 
@@ -46,18 +89,22 @@ function Form() {
         <input
           type="text"
           value={title}
-          name={"title"}
+          name="title"
           placeholder="Income Title"
           onChange={handleInput("title")}
+          required
         />
       </div>
       <div className="input-control">
         <input
           value={amount}
           type="number"
-          name={"amount"}
-          placeholder={"Income amount"}
+          name="amount"
+          placeholder="Income amount"
           onChange={handleInput("amount")}
+          required
+          min="0"
+          step="0.01"
         />
       </div>
       <div className="input-control">
@@ -66,9 +113,10 @@ function Form() {
           placeholderText="Enter a date"
           selected={date}
           dateFormat="dd/MM/yyyy"
-          onChange={(date) => {
-            setInputState({ ...inputState, date: date });
+          onChange={(selectedDate) => {
+            setInputState({ ...inputState, date: selectedDate });
           }}
+          required
         />
       </div>
       <div className="selects input-control">
@@ -84,7 +132,7 @@ function Form() {
           </option>
           <option value="salary">Salary</option>
           <option value="freelancing">Freelancing</option>
-          <option value="investments">Investiments</option>
+          <option value="investments">Investments</option>
           <option value="stocks">Stocks</option>
           <option value="bitcoin">Bitcoin</option>
           <option value="bank">Bank Transfer</option>
@@ -105,7 +153,7 @@ function Form() {
       </div>
       <div className="submit-btn">
         <Button
-          name={"Add Income"}
+          name="Add Income"
           icon={plus}
           bPad={".3rem .6rem"}
           bRad={"20px"}
@@ -116,7 +164,6 @@ function Form() {
     </FormStyled>
   );
 }
-
 const FormStyled = styled.form`
   display: flex;
   flex-direction: column;

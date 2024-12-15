@@ -1,5 +1,4 @@
 import { ZodError } from "zod";
-import { StatusCodes } from "http-status-codes";
 
 const validateData = ({ bodySchema, querySchema, paramsSchema }) => {
   return (req, res, next) => {
@@ -20,13 +19,9 @@ const validateData = ({ bodySchema, querySchema, paramsSchema }) => {
         const errorMessages = error.errors.map((issue) => ({
           message: `${issue.path.join(".")} is ${issue.message}`,
         }));
-        res
-          .status(StatusCodes.BAD_REQUEST)
-          .json({ error: "Invalid data", details: errorMessages });
+        res.invalid("Invalid data", errorMessages);
       } else {
-        res
-          .status(StatusCodes.INTERNAL_SERVER_ERROR)
-          .json({ error: "Internal Server Error" });
+        res.invalid("Invalid data", error.message);
       }
     }
   };

@@ -1,47 +1,50 @@
-import styled from 'styled-components';
-import { InnerLayout } from '../../styles/Layouts';
-import ExpenseForm from './ExpenseForm';
-import { useSelector } from 'react-redux';
+import styled from "styled-components";
+import { InnerLayout } from "../../styles/Layouts";
+import ExpenseForm from "./ExpenseForm";
+import { useSelector } from "react-redux";
 
-import { calculateTotalExpenses } from '../../features/utilities/totalUtilities';
-import ExpenseItem from './ExpenseItem';
+import { calculateTotalExpenses } from "../../features/utilities/totalUtilities";
+import ExpenseItem from "./ExpenseItem";
 
 function Expenses() {
   const expenses = useSelector((state) => state.expenses.expenses);
   return (
     <ExpenseStyled>
-      <InnerLayout style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <InnerLayout
+        style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+      >
         <h1>Expenses</h1>
         <div
           style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <h2 className='total-income'>
+          <h2 className="total-income">
             Total Expense: <span>₹{calculateTotalExpenses(expenses)}</span>
           </h2>
         </div>
 
-        <div className='income-content'>
-          <div className='form-container'>
+        <div className="income-content">
+          <div className="form-container">
             <ExpenseForm />
           </div>
-          <div className='incomes'>
+          <div className="incomes">
             {expenses.map((expense) => {
-              const { _id, title, amount, date, category, description, type } = expense;
+              const { id, title, amount, date, category, description, type } =
+                expense;
               return (
                 <ExpenseItem
-                  key={_id}
-                  id={_id}
+                  key={id}
+                  id={id}
                   title={title}
                   description={description}
                   amount={amount}
                   date={date}
                   type={type}
                   category={category}
-                  indicatorColor='var(--color-delete)'
+                  indicatorColor="var(--color-delete)"
                 />
               );
             })}

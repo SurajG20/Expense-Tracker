@@ -1,64 +1,126 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { userRequest } from "../../utils/requestMethods";
+import { toast } from "react-toastify";
+
+const initialState = {
+  incomes: [],
+  isFetching: false,
+  error: null,
+};
+
+export const getIncomes = createAsyncThunk(
+  "income/getIncomes",
+  async (_, { rejectWithValue }) => {
+    const res = await userRequest.get("/finance?type=income");
+
+    if (res.data.success === "true") {
+      return res.data.result;
+    } else if (res.data.success === "false") {
+      toast.error(res.data.message || "Failed to fetch incomes");
+      return rejectWithValue(res.data.message || "Failed to fetch incomes");
+    } else {
+      toast.error(res.data.message || "Unauthorized");
+      window.location.href = "/login";
+      return rejectWithValue("Authentication required");
+    }
+  }
+);
+
+export const deleteIncome = createAsyncThunk(
+  "income/deleteIncome",
+  async (id, { rejectWithValue }) => {
+    const res = await userRequest.delete(`/finance/${id}`);
+
+    if (res.data.success === "true") {
+      toast.success("Income deleted successfully");
+      return id;
+    } else if (res.data.success === "false") {
+      toast.error(res.data.message || "Failed to delete income");
+      return rejectWithValue(res.data.message || "Failed to delete income");
+    } else if (res.data.success === "invalid") {
+      const errors = res.data.result;
+      toast.error(errors?.[0].message || "Failed to delete income");
+      return rejectWithValue(res.data.result || "Invalid data");
+    } else {
+      toast.error(res.data.message || "Unauthorized");
+      window.location.href = "/login";
+      return rejectWithValue("Authentication required");
+    }
+  }
+);
+
+export const addIncome = createAsyncThunk(
+  "income/addIncome",
+  async (data, { rejectWithValue }) => {
+    const formattedData = {
+      ...data,
+      date: data.date instanceof Date ? data.date.toISOString() : data.date,
+    };
+    const res = await userRequest.post("/finance", formattedData);
+    if (res.data.success == "true") {
+      toast.success("Income added successfully");
+      return res.data.result;
+    } else if (res.data.success == "false") {
+      toast.error(res.data.message || "Failed to add income");
+      return rejectWithValue(res.data.message || "Failed to add income");
+    } else if (res.data.success == "invalid") {
+      const errors = res.data.result;
+      toast.error(errors?.[0].message || "Failed to add income");
+      return rejectWithValue(res.data.result || "Invalid data");
+    } else {
+      toast.error(res.data.message || "Unauthorized");
+      window.location.href = "/login";
+      return rejectWithValue("Authentication required");
+    }
+  }
+);
 
 const incomeSlice = createSlice({
   name: "income",
-  initialState: {
-    incomes: [],
-    isFetching: false,
-    error: false,
-  },
-  reducers: {
-    getIncomesStart: (state) => {
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getIncomes.pending, (state) => {
       state.isFetching = true;
-      state.error = false;
-    },
-    getIncomesSuccess: (state, action) => {
+      state.error = null;
+    });
+    builder.addCase(getIncomes.fulfilled, (state, action) => {
       state.isFetching = false;
       state.incomes = action.payload;
-    },
-    getIncomesFailure: (state) => {
+    });
+    builder.addCase(getIncomes.rejected, (state, action) => {
       state.isFetching = false;
-      state.error = true;
-    },
-    deleteIncomesStart: (state) => {
+      state.error = action.payload;
+    });
+
+    builder.addCase(deleteIncome.pending, (state) => {
       state.isFetching = true;
-      state.error = false;
-    },
-    deleteIncomesSuccess: (state, action) => {
+      state.error = null;
+    });
+    builder.addCase(deleteIncome.fulfilled, (state, action) => {
       state.isFetching = false;
-      const index = state.incomes.findIndex((i) => i._id === action.payload.id);
-      if (index !== -1) {
-        state.incomes.splice(index, 1);
-      }
-    },
-    deleteIncomesFailure: (state) => {
+      state.incomes = state.incomes.filter(
+        (income) => income._id !== action.payload
+      );
+    });
+    builder.addCase(deleteIncome.rejected, (state, action) => {
       state.isFetching = false;
-      state.error = true;
-    },
-    addIncomesStart: (state) => {
+      state.error = action.payload;
+    });
+
+    builder.addCase(addIncome.pending, (state) => {
       state.isFetching = true;
-      state.error = false;
-    },
-    addIncomesSuccess: (state, action) => {
+      state.error = null;
+    });
+    builder.addCase(addIncome.fulfilled, (state, action) => {
       state.isFetching = false;
       state.incomes.push(action.payload);
-    },
-    addIncomesFailure: (state) => {
+    });
+    builder.addCase(addIncome.rejected, (state, action) => {
       state.isFetching = false;
-      state.error = true;
-    },
+      state.error = action.payload;
+    });
   },
 });
 
-export const {
-  getIncomesStart,
-  getIncomesSuccess,
-  getIncomesFailure,
-  deleteIncomesFailure,
-  deleteIncomesSuccess,
-  deleteIncomesStart,
-  addIncomesFailure,
-  addIncomesStart,
-  addIncomesSuccess,
-} = incomeSlice.actions;
 export default incomeSlice.reducer;

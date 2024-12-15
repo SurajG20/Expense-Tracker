@@ -23,8 +23,7 @@ import {
 } from "../../utils/Icons";
 import Button from "../Button/Button";
 import { useDispatch } from "react-redux";
-import { deleteIncome, getIncomes } from "../../features/incomes/incomeActions";
-import { toast } from "react-toastify";
+import { deleteIncome, getIncomes } from "../../features/incomes/incomeSlice";
 
 function IncomeItem({
   id,
@@ -83,16 +82,10 @@ function IncomeItem({
     }
   };
 
-  const handleDelete = () => {
-    deleteIncome(dispatch, id)
-      .then(() => {
-        getIncomes(dispatch);
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Failed to delete income.");
-      });
-    toast.success("Income deleted successfully");
+  const handleDelete = (id) => {
+    dispatch(deleteIncome(id)).then(() => {
+      dispatch(getIncomes());
+    });
   };
 
   return (
@@ -123,7 +116,7 @@ function IncomeItem({
               color={"var(--primary-color"}
               iColor={"#fff"}
               hColor={"var(--color-green)"}
-              onClick={handleDelete}
+              onClick={() => handleDelete(id)}
             />
           </div>
         </div>

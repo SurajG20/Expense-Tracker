@@ -4,14 +4,14 @@ const createFinance = async (req, res) => {
   try {
     const data = req.body;
 
+    console.log({ data });
+
     const isTitleUnique = await FinanceServices.isTitleUnique(data.title);
 
     if (isTitleUnique) {
-      return res.error("Title Already Exists");
+      return res.error(`Title ${data.title} already exists`);
     }
-
     const finance = await FinanceServices.createFinance(data);
-
     return res.success("Finance Created Successfully", finance);
   } catch (error) {
     return res.error("Error Creating Finance", error.message);

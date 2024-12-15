@@ -22,9 +22,14 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      await registerUser(inputState);
+    const data = await registerUser(inputState).unwrap();
+    console.log(data);
+    if (data.success == "invalid") {
+      const errors = data.result;
+      return toast.error(errors?.[0].message);
+    } else if (data.success == "false") {
+      return toast.error(data.message);
+    } else {
       toast.success("Register successful!");
       navigate("/login");
       setInputState({
@@ -32,12 +37,6 @@ function Register() {
         password: "",
         username: "",
       });
-    } catch (err) {
-      if (err?.data?.message) {
-        toast.error(err.data.message);
-      } else {
-        toast.error("Invalid Credentials");
-      }
     }
   };
 

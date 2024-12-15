@@ -5,9 +5,9 @@ import Navigation from "../Navigation/Navigation";
 import Dashboard from "../Dashboard/Dashboard";
 import Incomes from "../Income/Income";
 import Expenses from "../Expenses/Expenses";
-import { getIncomes } from "../../features/incomes/incomeActions";
+import { getIncomes } from "../../features/incomes/incomeSlice";
 import { useDispatch } from "react-redux";
-import { getExpense } from "../../features/expenses/expenseActions";
+import { getExpenses } from "../../features/expenses/expenseSlice";
 import { getAuth } from "../../utils/requestMethods";
 
 function Home() {
@@ -16,8 +16,8 @@ function Home() {
 
   useEffect(() => {
     if (user) {
-      getIncomes(dispatch);
-      getExpense(dispatch);
+      dispatch(getIncomes());
+      dispatch(getExpenses());
     }
   });
 
