@@ -187,8 +187,8 @@ const UserProfile = styled.div`
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 
   .avatar {
-    width: 80px;
-    height: 80px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     overflow: hidden;
     border: 3px solid white;
@@ -205,7 +205,8 @@ const UserProfile = styled.div`
     text-align: center;
 
     h2 {
-      font-size: 1.4rem;
+      font-size: 1.2rem;
+      text-transform: capitalize;
       font-weight: 600;
       color: rgba(34, 34, 96, 0.9);
       margin-bottom: 0.3rem;
